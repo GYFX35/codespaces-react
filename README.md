@@ -1,70 +1,101 @@
-# GitHub Codespaces ♥️ React
+# Facebook Security Analyzer CLI
 
-Welcome to your shiny new Codespace running React! We've got everything fired up and running for you to explore React.
+This command-line tool provides utilities to help users analyze Facebook messages for potential phishing attempts and assess Facebook profiles for indicators of fakeness.
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+## Features
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+1.  **Phishing Message Analysis:**
+    *   Accepts user-provided message text.
+    *   Scans for common phishing keywords (e.g., "verify your account," "urgent security alert").
+    *   Extracts URLs and checks them against patterns of suspicious URLs (e.g., impersonation of legitimate domains, use of URL shorteners, IP address links).
+    *   Provides a "suspicion score" and a summary of findings.
 
-This project was bootstrapped for you with [Vite](https://vitejs.dev/).
+2.  **Fake Profile Analysis (Manual Check):**
+    *   Accepts a Facebook profile URL from the user.
+    *   **Important:** This tool *does not* scrape Facebook or automatically access profile data, in compliance with Facebook's policies.
+    *   It guides the user through a manual checklist of common fake profile indicators (e.g., generic profile picture, recent account age, low activity, poor grammar, suspicious requests).
+    *   Includes an interactive helper to guide the user in performing a reverse image search on the profile picture using external services like Google Images or TinEye.
+    *   Calculates a "suspicion score" based on the user's answers and provides an assessment of how likely the profile is to be fake.
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+*   Python 3.x
 
-### `npm start`
+## Installation & Setup
 
-We've already run this for you in the `Codespaces: server` terminal window below. If you need to stop the server for any reason you can just run `npm start` again to bring it back online.
+1.  **Clone the repository or download the files.**
+    If you have the files (`main.py` and the `facebook_analyzer` directory) in a single project folder, no complex installation is typically needed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000/](http://localhost:3000/) in the built-in Simple Browser (`Cmd/Ctrl + Shift + P > Simple Browser: Show`) to view your running application.
+2.  **No external Python libraries are required** for the core functionality as it currently stands (uses only standard libraries like `re` and `webbrowser`). If future enhancements (like direct API calls for URL checking) are added, this section will need updates.
 
-The page will reload automatically when you make changes.\
-You may also see any lint errors in the console.
+## How to Run
 
-### `npm test`
+1.  Open your terminal or command prompt.
+2.  Navigate to the directory where you saved the `main.py` file and the `facebook_analyzer` folder.
+3.  Run the application using the Python interpreter:
+    ```bash
+    python main.py
+    ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4.  The tool will display a menu:
 
-### `npm run build`
+    ```
+    --- Facebook Security Analyzer ---
+    Choose an option:
+    1. Analyze a message for phishing
+    2. Analyze a Facebook profile for fakeness (manual check)
+    3. Exit
+    ------------------------------------
+    Enter your choice (1-3):
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Analyze a message for phishing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+*   Select option `1`.
+*   When prompted, paste the full text of the suspicious message and press Enter.
+*   The tool will output:
+    *   A phishing likelihood score (higher is more suspicious).
+    *   Any suspicious keywords found.
+    *   Any suspicious URLs found, along with the reason they were flagged.
+    *   An overall summary.
 
-## Learn More
+### 2. Analyze a Facebook profile for fakeness (manual check)
 
-You can learn more in the [Vite documentation](https://vitejs.dev/guide/).
+*   Select option `2`.
+*   When prompted, enter the full Facebook profile URL (e.g., `https://www.facebook.com/some.profile`).
+*   The tool will open the profile URL in your default web browser for your manual inspection.
+*   You will then be guided through a series of yes/no questions based on your observations of the profile.
+    *   This includes an optional guided step to perform a reverse image search on the profile's picture.
+*   After you answer all questions, the tool will provide:
+    *   A list of fake profile indicators you noted.
+    *   An overall "suspicion score."
+    *   An assessment category (e.g., Low, Medium, High likelihood of being fake).
 
-To learn Vitest, a Vite-native testing framework, go to [Vitest documentation](https://vitest.dev/guide/)
+## Disclaimer
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+*   This tool provides heuristic-based analysis and guidance. It is **not foolproof** and should not be considered a definitive judgment on whether a message is phishing or a profile is fake.
+*   **Phishing Detection:** The tool uses a predefined list of keywords and URL patterns. Sophisticated phishing attempts may evade these checks. Always exercise extreme caution with suspicious messages, especially those asking for login credentials or personal information. Do not rely solely on this tool.
+*   **Fake Profile Detection:** The analysis is based *entirely* on your manual observations and answers. False positives and negatives are possible. Always use your best judgment when interacting with profiles online.
+*   **Facebook's Terms of Service:** This tool is designed to operate without violating Facebook's Terms of Service by not scraping or automatically collecting data from its platform. The fake profile analysis relies on user-driven manual checks.
+*   **Reporting:** If you encounter a phishing attempt or a malicious fake profile, report it directly to Facebook through their official reporting channels.
 
-### Code Splitting
+## File Structure
+```
+.
+├── main.py                     # Main CLI application script
+├── facebook_analyzer/
+│   ├── __init__.py             # Makes facebook_analyzer a Python package
+│   ├── phishing_detector.py    # Logic for phishing message analysis
+│   └── fake_profile_detector.py # Logic for fake profile interactive checklist
+└── README.md                   # This documentation file
+```
 
-This section has moved here: [https://sambitsahoo.com/blog/vite-code-splitting-that-works.html](https://sambitsahoo.com/blog/vite-code-splitting-that-works.html)
+## Future Enhancements (Potential)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf](https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf)
-
-### Advanced Configuration
-
-This section has moved here: [https://vitejs.dev/guide/build.html#advanced-base-options](https://vitejs.dev/guide/build.html#advanced-base-options)
-
-### Deployment
-
-This section has moved here: [https://vitejs.dev/guide/build.html](https://vitejs.dev/guide/build.html)
-
-### Troubleshooting
-
-This section has moved here: [https://vitejs.dev/guide/troubleshooting.html](https://vitejs.dev/guide/troubleshooting.html)
+*   Integration with external URL checking services/APIs (e.g., Google Safe Browsing) for more robust phishing detection.
+*   More sophisticated text analysis for phishing detection (e.g., NLP techniques).
+*   Allowing users to customize keyword lists.
+*   A graphical user interface (GUI) instead of a CLI.
+```
