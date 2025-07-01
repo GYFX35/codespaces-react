@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-07-01">
+    <creator>NetworkX 3.5</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <nodes>
+      <node id="RouterA" label="RouterA" />
+      <node id="SwitchX" label="SwitchX" />
+      <node id="RouterB" label="RouterB" />
+      <node id="Server1" label="Server1" />
+      <node id="Server2" label="Server2" />
+    </nodes>
+    <edges>
+      <edge source="RouterA" target="SwitchX" id="0" />
+      <edge source="RouterA" target="RouterB" id="1" />
+      <edge source="SwitchX" target="RouterB" id="2" />
+      <edge source="SwitchX" target="Server1" id="3" />
+      <edge source="SwitchX" target="Server2" id="4" />
+    </edges>
+  </graph>
+</gexf>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph edgedefault="undirected">
+    <node id="RouterA" />
+    <node id="SwitchX" />
+    <node id="RouterB" />
+    <node id="Server1" />
+    <node id="Server2" />
+    <edge source="RouterA" target="SwitchX" />
+    <edge source="RouterA" target="RouterB" />
+    <edge source="SwitchX" target="RouterB" />
+    <edge source="SwitchX" target="Server1" />
+    <edge source="SwitchX" target="Server2" />
+  </graph>
+</graphml>
