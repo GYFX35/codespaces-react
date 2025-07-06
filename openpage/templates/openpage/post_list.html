@@ -1,0 +1,22 @@
+{% extends "openpage/base.html" %}
+
+{% block title %}Latest Posts{% endblock %}
+
+{% block content %}
+    <h2>Latest Posts</h2>
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
+                <h3>Prompt: {{ post.prompt|truncatewords:20 }}</h3>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="AI Generated Image for prompt: {{ post.prompt|escape }}">
+                {% endif %}
+                <p><strong>Caption:</strong> {{ post.caption|linebreaksbr }}</p>
+                <p class="post-meta">By: {{ post.user.username }} on {{ post.created_at|date:"F d, Y H:i" }}</p>
+                <p><a href="{% url 'openpage:post_detail' pk=post.pk %}">View details</a></p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No posts yet. Be the first to <a href="{% url 'openpage:create_post' %}">create one</a>!</p>
+    {% endif %}
+{% endblock %}

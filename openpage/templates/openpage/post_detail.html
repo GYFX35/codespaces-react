@@ -1,0 +1,19 @@
+{% extends "openpage/base.html" %}
+
+{% block title %}Post Details{% endblock %}
+
+{% block content %}
+    <h2>Post Details</h2>
+    <div class="post">
+        <h3>Prompt: {{ post.prompt }}</h3>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="AI Generated Image for prompt: {{ post.prompt|escape }}">
+        {% endif %}
+        <p><strong>Caption:</strong></p>
+        <p>{{ post.caption|linebreaksbr }}</p>
+        <p class="post-meta">By: {{ post.user.username }}</p>
+        <p class="post-meta">Created: {{ post.created_at|date:"F d, Y H:i" }}</p>
+        <p class="post-meta">Last updated: {{ post.updated_at|date:"F d, Y H:i" }}</p>
+        <p><a href="{% url 'openpage:post_list' %}">Back to all posts</a></p>
+    </div>
+{% endblock %}

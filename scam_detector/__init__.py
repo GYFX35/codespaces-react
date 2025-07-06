@@ -12,7 +12,7 @@ from .heuristics import (
     SUSPICIOUS_TLDS,
     CRYPTO_ADDRESS_PATTERNS,
     PHONE_NUMBER_PATTERN,
-    HEURISTIC_WEIGHTS
+    HEURISTIC_WEIGHTS,
 )
 
 from .analyzer import analyze_text_for_scams
