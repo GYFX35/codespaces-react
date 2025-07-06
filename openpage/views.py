@@ -43,3 +43,6 @@ def post_list_view(request):
 def post_detail_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'openpage/post_detail.html', {'post': post})
+
+def offline_view(request):
+    return render(request, 'openpage/offline.html')

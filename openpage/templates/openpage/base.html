@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Social Platform{% endblock %}</title>
+
+    <!-- PWA Manifest and Theme Color -->
+    <link rel="manifest" href="{% static 'openpage/manifest.json' %}">
+    <meta name="theme-color" content="#333333"> <!-- Should match manifest.json theme_color -->
+
     <style>
         body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
         header { background-color: #333; color: #fff; padding: 10px 0; text-align: center; }
@@ -53,5 +59,20 @@
         {% endblock %}
     </div>
 
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{% static 'openpage/sw.js' %}")
+                    .then(registration => {
+                        console.log('Service Worker registered successfully with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        } else {
+            console.log('Service Worker not supported in this browser.');
+        }
+    </script>
 </body>
 </html>

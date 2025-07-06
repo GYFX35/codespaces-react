@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.post_list_view, name='post_list'),
     path('post/create/', views.create_post_view, name='create_post'),
     path('post/<int:pk>/', views.post_detail_view, name='post_detail'),
+    path('offline/', views.offline_view, name='offline'),
 ]

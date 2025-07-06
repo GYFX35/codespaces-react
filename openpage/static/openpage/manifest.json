@@ -1,0 +1,30 @@
+{
+  "name": "Social Platform - OpenPage",
+  "short_name": "OpenPage",
+  "description": "A social platform for creating and sharing AI-generated images and posts.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#333333",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/static/openpage/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/openpage/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/openpage/icons/icon-1024x1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any maskable"
+    }
+  ]
+}

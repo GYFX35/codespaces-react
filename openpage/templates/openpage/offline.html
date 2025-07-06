@@ -1,0 +1,30 @@
+{% extends "openpage/base.html" %}
+{% load static %}
+
+{% block title %}Offline{% endblock %}
+
+{% block content %}
+    <h2>You are Offline</h2>
+    <p>We're sorry, but it seems you are currently offline and we couldn't load the page you requested.</p>
+    <p>Please check your internet connection.</p>
+
+    <p>Some previously visited pages might still be accessible:</p>
+    <ul>
+        <li><a href="{% url 'openpage:post_list' %}">Home / Post List</a></li>
+        {# Add links to other key pages if they are likely to be cached #}
+    </ul>
+
+    <style>
+        .offline-notice {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            border-radius: 4px;
+        }
+    </style>
+    <div class="offline-notice">
+        This page is a fallback for when you're offline.
+    </div>
+{% endblock %}
