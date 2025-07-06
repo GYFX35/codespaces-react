@@ -1,12 +1,42 @@
 {% extends "openpage/base.html" %}
+{% load static %}
 
 {% block title %}Create New Post{% endblock %}
 
 {% block content %}
     <h2>Create a New Post</h2>
-    <form method="post" enctype="multipart/form-data">
+    <form id="create-post-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Post</button>
+
+        <p>
+            <label for="{{ form.prompt.id_for_label }}">{{ form.prompt.label }}:</label>
+            {{ form.prompt }} <span id="prompt-char-count" style="font-size: 0.8em; color: #555;"></span>
+            <span id="prompt-error" style="color: red; display: none; font-size: 0.9em; display: block;"></span>
+            {% if form.prompt.help_text %}
+                <small style="color: grey; display: block;">{{ form.prompt.help_text }}</small>
+            {% endif %}
+        </p>
+
+        <p>
+            <label for="{{ form.caption.id_for_label }}">{{ form.caption.label }}:</label>
+            {{ form.caption }} <span id="caption-char-count" style="font-size: 0.8em; color: #555;"></span>
+            {% if form.caption.help_text %}
+                <small style="color: grey; display: block;">{{ form.caption.help_text }}</small>
+            {% endif %}
+        </p>
+
+        {% if form.non_field_errors %}
+            <div style="color: red;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <button id="submit-post-button" type="submit">Create Post</button>
     </form>
+    <div id="loading-indicator" style="display: none; margin-top: 15px; padding: 10px; background-color: #e9ecef; border-radius: 4px;">
+        <p>Generating image and creating post, please wait...</p>
+        <!-- You could add a spinner GIF or CSS spinner here later if desired -->
+    </div>
+
+<script src="{% static 'openpage/js/create_post.js' %}"></script>
 {% endblock %}
