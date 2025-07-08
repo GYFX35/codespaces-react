@@ -1,6 +1,94 @@
 console.log("LoveCipher script loaded!");
 
+// --- Facebook SDK Stubs ---
+function initializeFacebookSDK() {
+    console.log("FB SDK: Attempting to initialize...");
+    if (typeof FBInstant !== 'undefined') {
+        console.log("FB SDK: FBInstant found. Initializing SDK...");
+        FBInstant.initializeAsync()
+            .then(() => {
+                console.log("FB SDK: Successfully initialized.");
+                // SDK is ready, now get player info, signal loading, etc.
+                getFacebookPlayerInfo();
+                signalGameReadyToFacebook();
+            })
+            .catch((error) => {
+                console.error("FB SDK: Initialization failed:", error);
+            });
+    } else {
+        console.warn("FB SDK: FBInstant not found. Running in standalone mode. Facebook features will be simulated.");
+        // Simulate a successful initialization for testing flow
+        getFacebookPlayerInfo(); // Call these directly if SDK not present
+        signalGameReadyToFacebook();
+    }
+}
+
+function getFacebookPlayerInfo() {
+    console.log("FB SDK: Attempting to get player info...");
+    if (typeof FBInstant !== 'undefined' && FBInstant.player) {
+        const playerName = FBInstant.player.getName();
+        const playerId = FBInstant.player.getID();
+        console.log(`FB SDK: Player Name: ${playerName}, Player ID: ${playerId}`);
+        // You could update UI elements here with player name if desired
+    } else {
+        console.log("FB SDK: (Simulated) Player Name: TestUser, Player ID: 12345");
+    }
+}
+
+function signalGameReadyToFacebook() {
+    console.log("FB SDK: Signaling game ready to Facebook...");
+    if (typeof FBInstant !== 'undefined') {
+        FBInstant.startGameAsync()
+            .then(() => {
+                console.log("FB SDK: Game started successfully with Facebook platform.");
+            })
+            .catch((error) => {
+                console.error("FB SDK: startGameAsync failed:", error);
+            });
+    } else {
+        console.log("FB SDK: (Simulated) Game ready signal sent.");
+    }
+}
+
+function saveFacebookGameState(gameState) {
+    console.log("FB SDK: Attempting to save game state...", gameState);
+    if (typeof FBInstant !== 'undefined' && FBInstant.player) {
+        FBInstant.player.setDataAsync(gameState)
+            .then(() => {
+                console.log("FB SDK: Game state saved successfully.");
+            })
+            .catch((error) => {
+                console.error("FB SDK: Failed to save game state:", error);
+            });
+    } else {
+        console.log("FB SDK: (Simulated) Game state saved.", gameState);
+    }
+}
+
+function loadFacebookGameState() {
+    console.log("FB SDK: Attempting to load game state...");
+    return new Promise((resolve, reject) => {
+        if (typeof FBInstant !== 'undefined' && FBInstant.player) {
+            FBInstant.player.getDataAsync(['currentStage', 'relationshipScore', 'collectedClues', 'playerPathClues'])
+                .then(data => {
+                    console.log("FB SDK: Game state loaded successfully.", data);
+                    resolve(data);
+                })
+                .catch(error => {
+                    console.error("FB SDK: Failed to load game state:", error);
+                    reject(error);
+                });
+        } else {
+            console.log("FB SDK: (Simulated) No game state found or SDK not available.");
+            resolve(null); // Resolve with null if no data or SDK not present
+        }
+    });
+}
+// --- End Facebook SDK Stubs ---
+
 document.addEventListener('DOMContentLoaded', () => {
+    initializeFacebookSDK(); // Initialize FB SDK first
+
     const playerInput = document.getElementById('player-input');
     const sendButton = document.getElementById('send-button');
     const chatDisplay = document.getElementById('chat-display');
@@ -245,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setInputMode('text');
         dialogueChoicesArea.innerHTML = '';
         displayNextMessage();
+        saveFacebookGameState(getCurrentGameState()); // Save after choice
     }
 
     function processPlayerTextInput(text) {
@@ -300,6 +389,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Otherwise, currentMessages is already set to the "incorrect" feedback.
             if (puzzleSolvedForThisTurn) {
                  currentMessages = [...(conversations[currentStage] || [])];
+                 if (expectingPuzzleAnswer === null) { // Puzzle was fully solved
+                    saveFacebookGameState(getCurrentGameState()); // Save after solving a puzzle
+                 }
             }
 
             messageIndex = 0;
@@ -339,11 +431,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Game Initialization ---
-    function startGame() {
+    async function startGame() { // Made async to await potential FB load
         console.log("Game initialized.");
+
+        // Attempt to load game state from Facebook
+        const loadedData = await loadFacebookGameState();
+        if (loadedData) {
+            console.log("Applying loaded game state:", loadedData);
+            // Carefully apply loaded data, ensuring types and existence
+            if (loadedData.currentStage) currentStage = loadedData.currentStage;
+            if (typeof loadedData.relationshipScore === 'number') relationshipScore = loadedData.relationshipScore;
+            if (Array.isArray(loadedData.collectedClues)) collectedClues = [...loadedData.collectedClues];
+            if (Array.isArray(loadedData.playerPathClues)) playerPathClues = [...loadedData.playerPathClues];
+
+            // Need to re-find currentMessages and messageIndex based on loadedStage
+            currentMessages = [...(conversations[currentStage] || [])];
+            messageIndex = 0; // Start from beginning of loaded stage, or find exact message if saved
+
+            updateCluesDisplay(); // Update UI with loaded clues
+            // Potentially, if a puzzle was partially completed, restore that state too.
+            // For now, restarting the stage is simpler.
+        }
+
         statusText.textContent = `Relationship Score: ${relationshipScore}`;
-        setInputMode('text'); // Start with text input
+        setInputMode('text');
+
+        // If we loaded a stage that ends in choices or a puzzle, displayNextMessage will handle it.
+        // If it's an NPC message, it will display.
+        // If it's the very start (intro) or a point where player should type, it will wait.
         displayNextMessage();
+
+        // Example of saving state (e.g., if game auto-saves on start after loading)
+        // saveFacebookGameState(getCurrentGameState());
+    }
+
+    function getCurrentGameState() {
+        return {
+            currentStage: currentStage,
+            relationshipScore: relationshipScore,
+            collectedClues: collectedClues,
+            playerPathClues: playerPathClues,
+            // Potentially add expectingPuzzleAnswer if you want to save mid-puzzle state
+        };
     }
 
     startGame();
