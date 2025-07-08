@@ -1,0 +1,23 @@
+{
+  "name": "LoveCipher",
+  "short_name": "LoveCipher",
+  "description": "A narrative puzzle game of love and ciphers.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffe4e1",
+  "theme_color": "#ff69b4",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
