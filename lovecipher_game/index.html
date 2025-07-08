@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveCipher</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>LoveCipher</h1>
+        </header>
+        <main>
+            <div id="chat-display">
+                <!-- Messages will appear here -->
+            </div>
+            <div id="player-input-area">
+                <input type="text" id="player-input" placeholder="Type your message...">
+                <button id="send-button">Send</button>
+            </div>
+            <div id="dialogue-choices-area" class="hidden">
+                <!-- Dialogue choice buttons will appear here -->
+            </div>
+            <div id="clues-area">
+                <h2>Clues</h2>
+                <ul id="clues-list">
+                    <!-- Clues will be listed here -->
+                </ul>
+            </div>
+            <div id="relationship-status">
+                <h2>Relationship</h2>
+                <p id="status-text">Just starting...</p>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 LoveCipher Game</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
