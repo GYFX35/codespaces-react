@@ -11,7 +11,17 @@ LEGITIMATE_DOMAINS = {
     "tinder": ["tinder.com", "gotinder.com"],
     "snapchat": ["snapchat.com"],
     "wechat": ["wechat.com"],
-    "general": ["google.com", "twitter.com", "linkedin.com"] # Other common safe domains
+    "telegram": ["telegram.org", "t.me"],
+    "twitter": ["twitter.com", "x.com"],
+    "pinterest": ["pinterest.com"],
+    "linkedin": ["linkedin.com"],
+    "line": ["line.me"],
+    "discord": ["discord.com", "discord.gg"],
+    "teams": ["teams.microsoft.com", "microsoft.com"],
+    "zoom": ["zoom.us"],
+    "amazon": ["amazon.com"],
+    "alibaba": ["alibaba.com"],
+    "general": ["google.com"]
 }
 
 
@@ -100,8 +110,8 @@ PHONE_NUMBER_PATTERN = re.compile(
 # These patterns aim to catch URLs that impersonate legitimate domains.
 SUSPICIOUS_URL_PATTERNS = [
     # Impersonation using subdomains or hyphens
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat)\.com\.[a-z0-9\-]+\.[a-z]+",
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat)-[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba)\.com\.[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba)-[a-z0-9\-]+\.[a-z]+",
     # Common URL shorteners
     r"https?://bit\.ly",
     r"https?://goo\.gl",

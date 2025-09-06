@@ -33,6 +33,55 @@ PLATFORM_SPECIFIC_ADVICE = {
         "Check the 'About' section for inconsistencies or lack of information.",
         "Look at the age of the account and the history of posts.",
         "Be suspicious of friend requests from people you don't know, especially if you have no mutual friends."
+    ],
+    "telegram": [
+        "Be wary of unsolicited messages from users or bots, especially those promoting investments or crypto.",
+        "Check the username for slight misspellings of official channels or known contacts.",
+        "Never share personal codes or login information with anyone on Telegram."
+    ],
+    "twitter": [
+        "Look for newly created accounts with very few tweets but high follower counts (often bots).",
+        "Be suspicious of accounts that primarily tweet suspicious links or participate in crypto scams.",
+        "Check the bio and tweets for poor grammar or generic content."
+    ],
+    "pinterest": [
+        "Be cautious of pins that lead to suspicious websites unrelated to the pin's content.",
+        "Look for profiles with very few boards or pins but a high number of followers.",
+        "Be wary of accounts that leave spammy comments with links."
+    ],
+    "linkedin": [
+        "Be suspicious of profiles with generic job titles and descriptions.",
+        "Check for inconsistencies in work history or education.",
+        "Be wary of connection requests from individuals with no mutual connections or a sparse profile."
+    ],
+    "line": [
+        "Be cautious of messages from unknown accounts, especially those with links or QR codes.",
+        "Scammers may impersonate official accounts; check for the green shield icon for verified accounts.",
+    ],
+    "discord": [
+        "Be wary of direct messages from users you don't share a server with.",
+        "Never click on suspicious links or download files from unknown users.",
+        "Be cautious of friend requests from users with no mutual friends or servers in common."
+    ],
+    "teams": [
+        "Be wary of messages from external accounts you don't recognize.",
+        "Do not share sensitive company information with unverified contacts.",
+        "Report any suspicious activity to your IT department."
+    ],
+    "zoom": [
+        "Be cautious of unexpected meeting invitations or links.",
+        "Ensure the meeting host is someone you know and trust.",
+        "Do not share personal information in public chat during a meeting."
+    ],
+    "amazon": [
+        "Be wary of seller profiles with little to no feedback or very new accounts.",
+        "Check product reviews for signs of being fake or paid.",
+        "Be suspicious of sellers who ask you to complete a transaction outside of Amazon's official platform."
+    ],
+    "alibaba": [
+        "Verify the seller's credentials, such as their 'Gold Supplier' status and business license.",
+        "Be cautious of prices that are significantly lower than the market average.",
+        "Use Alibaba's Trade Assurance for secure payments and to protect against fraud."
     ]
 }
 
