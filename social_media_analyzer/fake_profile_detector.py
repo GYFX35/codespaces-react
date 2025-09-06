@@ -82,6 +82,32 @@ PLATFORM_SPECIFIC_ADVICE = {
         "Verify the seller's credentials, such as their 'Gold Supplier' status and business license.",
         "Be cautious of prices that are significantly lower than the market average.",
         "Use Alibaba's Trade Assurance for secure payments and to protect against fraud."
+    ],
+    "youtube": [
+        "Be wary of comments with suspicious links, especially on popular videos.",
+        "Check the 'About' page of a channel for contact information and creation date.",
+        "Look for channels with high subscriber counts but low video views or engagement."
+    ],
+    "skype": [
+        "Be cautious of contact requests from people you don't know.",
+        "Never send money or share personal information with unknown contacts.",
+        "Scammers may impersonate Microsoft or Skype support to gain access to your account."
+    ],
+    "vk": [
+        "Be suspicious of profiles with very little personal information or photos.",
+        "Check for a large number of 'friends' but low engagement on posts.",
+        "Be wary of messages with links to third-party sites, especially for games or prizes."
+    ],
+    "reddit": [
+        "Check a user's post and comment history for signs of spam or bot-like activity.",
+        "Be cautious of unsolicited private messages with investment opportunities or suspicious links.",
+        "Look at the age of the Reddit account (cake day) and their karma score."
+    ],
+    "email": [
+        "Carefully examine the sender's email address for any misspellings or unusual domains.",
+        "Be suspicious of emails that create a sense of urgency or pressure.",
+        "Never click on links or download attachments from unsolicited or unexpected emails.",
+        "Check for generic greetings like 'Dear Customer' instead of your name."
     ]
 }
 

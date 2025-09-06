@@ -6,7 +6,7 @@ def main():
     print("--- Social Media Analyzer ---")
     print("This tool helps you analyze social media profiles and messages for potential scams.")
 
-    platforms = ["facebook", "instagram", "whatsapp", "tiktok", "tinder", "snapchat", "wechat", "telegram", "twitter", "pinterest", "linkedin", "line", "discord", "teams", "zoom", "amazon", "alibaba"]
+    platforms = ["facebook", "instagram", "whatsapp", "tiktok", "tinder", "snapchat", "wechat", "telegram", "twitter", "pinterest", "linkedin", "line", "discord", "teams", "zoom", "amazon", "alibaba", "youtube", "skype", "vk", "reddit", "email"]
 
     while True:
         print("\nSelect the social media platform you want to analyze:")
