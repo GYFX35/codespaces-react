@@ -129,6 +129,11 @@ PLATFORM_SPECIFIC_ADVICE = {
         "Be suspicious of anyone asking for your API keys, passwords, or 2FA codes.",
         "Double-check the domain name of the Binance website before logging in (binance.com).",
         "Binance support will never ask you to send them cryptocurrency."
+    ],
+    "sharechat": [
+        "Be wary of profiles that post a large amount of spam or promotional content.",
+        "Check for the 'verified' badge on profiles of public figures.",
+        "Do not engage with users who ask for personal information or money in private chat."
     ]
 }
 

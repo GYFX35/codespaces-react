@@ -30,6 +30,7 @@ LEGITIMATE_DOMAINS = {
     "signal": ["signal.org"],
     "badoo": ["badoo.com"],
     "binance": ["binance.com"],
+    "sharechat": ["sharechat.com"],
     "general": ["google.com"]
 }
 
@@ -121,8 +122,8 @@ PHONE_NUMBER_PATTERN = re.compile(
 # These patterns aim to catch URLs that impersonate legitimate domains.
 SUSPICIOUS_URL_PATTERNS = [
     # Impersonation using subdomains or hyphens
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance)\.com\.[a-z0-9\-]+\.[a-z]+",
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance)-[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)\.com\.[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)-[a-z0-9\-]+\.[a-z]+",
     # Common URL shorteners
     r"https?://bit\.ly",
     r"https?://goo\.gl",
