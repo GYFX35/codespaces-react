@@ -9,7 +9,7 @@ from .heuristics import (
     PAYMENT_KEYWORDS,
     URL_PATTERN,
     SUSPICIOUS_TLDS,
-    CRYPTO_ADDRESS_PATTERNS,
+    FINANCIAL_ADDRESS_PATTERNS,
     PHONE_NUMBER_PATTERN,
     HEURISTIC_WEIGHTS,
     LEGITIMATE_DOMAINS,
@@ -109,13 +109,13 @@ def analyze_text_for_scams(text_content, platform=None):
             indicators_found.append(f"Suspicious URL found: {url_str} (Reason: {reason})")
         urls_analyzed_details.append(url_analysis)
 
-    # 3. Crypto Addresses
-    for crypto_name, pattern in CRYPTO_ADDRESS_PATTERNS.items():
+    # 3. Financial Identifiers
+    for id_name, pattern in FINANCIAL_ADDRESS_PATTERNS.items():
         if pattern.search(text_content):
-            message = f"Potential {crypto_name} cryptocurrency address found."
+            message = f"Potential {id_name} identifier found."
             if message not in indicators_found:
                 indicators_found.append(message)
-                score += HEURISTIC_WEIGHTS.get("CRYPTO_ADDRESS", 2.5)
+                score += HEURISTIC_WEIGHTS.get(f"{id_name}_ADDRESS", 2.5)
 
     # 4. Phone Numbers
     if PHONE_NUMBER_PATTERN.search(text_content):
@@ -130,22 +130,3 @@ def analyze_text_for_scams(text_content, platform=None):
         "urls_analyzed": urls_analyzed_details
     }
 
-if __name__ == '__main__':
-    # Example Usage
-    test_message = "URGENT: Your Instagram account has unusual activity. Please verify your account now by clicking http://instagram.security-update.com/login to avoid suspension."
-    analysis_result = analyze_text_for_scams(test_message, platform="instagram")
-    print(f"--- Analyzing Instagram Scam Message ---")
-    print(f"Message: {test_message}")
-    print(f"Score: {analysis_result['score']}")
-    print("Indicators:")
-    for indicator in analysis_result['indicators_found']:
-        print(f"  - {indicator}")
-
-    test_message_whatsapp = "Hey, check out this link: http://wa.me/1234567890. Also, please send money to my bitcoin wallet 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
-    analysis_result_whatsapp = analyze_text_for_scams(test_message_whatsapp, platform="whatsapp")
-    print(f"\n--- Analyzing WhatsApp Message ---")
-    print(f"Message: {test_message_whatsapp}")
-    print(f"Score: {analysis_result_whatsapp['score']}")
-    print("Indicators:")
-    for indicator in analysis_result_whatsapp['indicators_found']:
-        print(f"  - {indicator}")
