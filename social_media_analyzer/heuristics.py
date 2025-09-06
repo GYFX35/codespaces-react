@@ -11,7 +11,27 @@ LEGITIMATE_DOMAINS = {
     "tinder": ["tinder.com", "gotinder.com"],
     "snapchat": ["snapchat.com"],
     "wechat": ["wechat.com"],
-    "general": ["google.com", "twitter.com", "linkedin.com"] # Other common safe domains
+    "telegram": ["telegram.org", "t.me"],
+    "twitter": ["twitter.com", "x.com"],
+    "pinterest": ["pinterest.com"],
+    "linkedin": ["linkedin.com"],
+    "line": ["line.me"],
+    "discord": ["discord.com", "discord.gg"],
+    "teams": ["teams.microsoft.com", "microsoft.com"],
+    "zoom": ["zoom.us"],
+    "amazon": ["amazon.com"],
+    "alibaba": ["alibaba.com"],
+    "youtube": ["youtube.com", "youtu.be"],
+    "skype": ["skype.com"],
+    "vk": ["vk.com"],
+    "reddit": ["reddit.com", "old.reddit.com"],
+    "email": [],
+    "viber": ["viber.com"],
+    "signal": ["signal.org"],
+    "badoo": ["badoo.com"],
+    "binance": ["binance.com"],
+    "sharechat": ["sharechat.com"],
+    "general": ["google.com"]
 }
 
 
@@ -44,7 +64,9 @@ TOO_GOOD_TO_BE_TRUE_KEYWORDS = [
     "guaranteed", "risk-free", "earn money fast", "work from home easy",
     "investment opportunity", "high return", "get rich quick",
     "inheritance", "unclaimed funds", "nigerian prince",
-    "free followers", "pro account for free", "verified badge" # Social media specific
+    "free followers", "pro account for free", "verified badge", # Social media specific
+    "forex", "fx trading", "guaranteed profit", "trading signal", "forex robot",
+    "metatrader", "mt4", "mt5", "copy trading", "pamm"
 ]
 
 # Generic greetings/salutations that can be suspicious in unsolicited contexts
@@ -100,8 +122,8 @@ PHONE_NUMBER_PATTERN = re.compile(
 # These patterns aim to catch URLs that impersonate legitimate domains.
 SUSPICIOUS_URL_PATTERNS = [
     # Impersonation using subdomains or hyphens
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat)\.com\.[a-z0-9\-]+\.[a-z]+",
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat)-[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)\.com\.[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)-[a-z0-9\-]+\.[a-z]+",
     # Common URL shorteners
     r"https?://bit\.ly",
     r"https?://goo\.gl",

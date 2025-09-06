@@ -33,6 +33,107 @@ PLATFORM_SPECIFIC_ADVICE = {
         "Check the 'About' section for inconsistencies or lack of information.",
         "Look at the age of the account and the history of posts.",
         "Be suspicious of friend requests from people you don't know, especially if you have no mutual friends."
+    ],
+    "telegram": [
+        "Be wary of unsolicited messages from users or bots, especially those promoting investments or crypto.",
+        "Check the username for slight misspellings of official channels or known contacts.",
+        "Never share personal codes or login information with anyone on Telegram."
+    ],
+    "twitter": [
+        "Look for newly created accounts with very few tweets but high follower counts (often bots).",
+        "Be suspicious of accounts that primarily tweet suspicious links or participate in crypto scams.",
+        "Check the bio and tweets for poor grammar or generic content."
+    ],
+    "pinterest": [
+        "Be cautious of pins that lead to suspicious websites unrelated to the pin's content.",
+        "Look for profiles with very few boards or pins but a high number of followers.",
+        "Be wary of accounts that leave spammy comments with links."
+    ],
+    "linkedin": [
+        "Be suspicious of profiles with generic job titles and descriptions.",
+        "Check for inconsistencies in work history or education.",
+        "Be wary of connection requests from individuals with no mutual connections or a sparse profile."
+    ],
+    "line": [
+        "Be cautious of messages from unknown accounts, especially those with links or QR codes.",
+        "Scammers may impersonate official accounts; check for the green shield icon for verified accounts.",
+    ],
+    "discord": [
+        "Be wary of direct messages from users you don't share a server with.",
+        "Never click on suspicious links or download files from unknown users.",
+        "Be cautious of friend requests from users with no mutual friends or servers in common."
+    ],
+    "teams": [
+        "Be wary of messages from external accounts you don't recognize.",
+        "Do not share sensitive company information with unverified contacts.",
+        "Report any suspicious activity to your IT department."
+    ],
+    "zoom": [
+        "Be cautious of unexpected meeting invitations or links.",
+        "Ensure the meeting host is someone you know and trust.",
+        "Do not share personal information in public chat during a meeting."
+    ],
+    "amazon": [
+        "Be wary of seller profiles with little to no feedback or very new accounts.",
+        "Check product reviews for signs of being fake or paid.",
+        "Be suspicious of sellers who ask you to complete a transaction outside of Amazon's official platform."
+    ],
+    "alibaba": [
+        "Verify the seller's credentials, such as their 'Gold Supplier' status and business license.",
+        "Be cautious of prices that are significantly lower than the market average.",
+        "Use Alibaba's Trade Assurance for secure payments and to protect against fraud."
+    ],
+    "youtube": [
+        "Be wary of comments with suspicious links, especially on popular videos.",
+        "Check the 'About' page of a channel for contact information and creation date.",
+        "Look for channels with high subscriber counts but low video views or engagement."
+    ],
+    "skype": [
+        "Be cautious of contact requests from people you don't know.",
+        "Never send money or share personal information with unknown contacts.",
+        "Scammers may impersonate Microsoft or Skype support to gain access to your account."
+    ],
+    "vk": [
+        "Be suspicious of profiles with very little personal information or photos.",
+        "Check for a large number of 'friends' but low engagement on posts.",
+        "Be wary of messages with links to third-party sites, especially for games or prizes."
+    ],
+    "reddit": [
+        "Check a user's post and comment history for signs of spam or bot-like activity.",
+        "Be cautious of unsolicited private messages with investment opportunities or suspicious links.",
+        "Look at the age of the Reddit account (cake day) and their karma score."
+    ],
+    "email": [
+        "Carefully examine the sender's email address for any misspellings or unusual domains.",
+        "Be suspicious of emails that create a sense of urgency or pressure.",
+        "Never click on links or download attachments from unsolicited or unexpected emails.",
+        "Check for generic greetings like 'Dear Customer' instead of your name.",
+        "In Gmail, look for the 'verified sender' checkmark for well-known brands."
+    ],
+    "viber": [
+        "Be wary of messages from unknown numbers, especially those containing links or asking for money.",
+        "Check the profile of unknown contacts for any suspicious information.",
+        "Viber will never ask for your personal information or login details in a message."
+    ],
+    "signal": [
+        "Be cautious of message requests from people you don't know.",
+        "Signal is end-to-end encrypted, but that doesn't protect you from scams if you interact with a scammer.",
+        "Do not share your PIN or personal information with anyone."
+    ],
+    "badoo": [
+        "Be wary of users who immediately ask to move the conversation to another platform.",
+        "Look for the 'verified user' badge on profiles.",
+        "Be cautious of profiles that seem too good to be true or have professional-level photos."
+    ],
+    "binance": [
+        "Be suspicious of anyone asking for your API keys, passwords, or 2FA codes.",
+        "Double-check the domain name of the Binance website before logging in (binance.com).",
+        "Binance support will never ask you to send them cryptocurrency."
+    ],
+    "sharechat": [
+        "Be wary of profiles that post a large amount of spam or promotional content.",
+        "Check for the 'verified' badge on profiles of public figures.",
+        "Do not engage with users who ask for personal information or money in private chat."
     ]
 }
 
