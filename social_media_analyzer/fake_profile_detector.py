@@ -107,7 +107,28 @@ PLATFORM_SPECIFIC_ADVICE = {
         "Carefully examine the sender's email address for any misspellings or unusual domains.",
         "Be suspicious of emails that create a sense of urgency or pressure.",
         "Never click on links or download attachments from unsolicited or unexpected emails.",
-        "Check for generic greetings like 'Dear Customer' instead of your name."
+        "Check for generic greetings like 'Dear Customer' instead of your name.",
+        "In Gmail, look for the 'verified sender' checkmark for well-known brands."
+    ],
+    "viber": [
+        "Be wary of messages from unknown numbers, especially those containing links or asking for money.",
+        "Check the profile of unknown contacts for any suspicious information.",
+        "Viber will never ask for your personal information or login details in a message."
+    ],
+    "signal": [
+        "Be cautious of message requests from people you don't know.",
+        "Signal is end-to-end encrypted, but that doesn't protect you from scams if you interact with a scammer.",
+        "Do not share your PIN or personal information with anyone."
+    ],
+    "badoo": [
+        "Be wary of users who immediately ask to move the conversation to another platform.",
+        "Look for the 'verified user' badge on profiles.",
+        "Be cautious of profiles that seem too good to be true or have professional-level photos."
+    ],
+    "binance": [
+        "Be suspicious of anyone asking for your API keys, passwords, or 2FA codes.",
+        "Double-check the domain name of the Binance website before logging in (binance.com).",
+        "Binance support will never ask you to send them cryptocurrency."
     ]
 }
 

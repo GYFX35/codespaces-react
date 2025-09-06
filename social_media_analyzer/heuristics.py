@@ -26,6 +26,10 @@ LEGITIMATE_DOMAINS = {
     "vk": ["vk.com"],
     "reddit": ["reddit.com", "old.reddit.com"],
     "email": [],
+    "viber": ["viber.com"],
+    "signal": ["signal.org"],
+    "badoo": ["badoo.com"],
+    "binance": ["binance.com"],
     "general": ["google.com"]
 }
 
@@ -59,7 +63,9 @@ TOO_GOOD_TO_BE_TRUE_KEYWORDS = [
     "guaranteed", "risk-free", "earn money fast", "work from home easy",
     "investment opportunity", "high return", "get rich quick",
     "inheritance", "unclaimed funds", "nigerian prince",
-    "free followers", "pro account for free", "verified badge" # Social media specific
+    "free followers", "pro account for free", "verified badge", # Social media specific
+    "forex", "fx trading", "guaranteed profit", "trading signal", "forex robot",
+    "metatrader", "mt4", "mt5", "copy trading", "pamm"
 ]
 
 # Generic greetings/salutations that can be suspicious in unsolicited contexts
@@ -115,8 +121,8 @@ PHONE_NUMBER_PATTERN = re.compile(
 # These patterns aim to catch URLs that impersonate legitimate domains.
 SUSPICIOUS_URL_PATTERNS = [
     # Impersonation using subdomains or hyphens
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit)\.com\.[a-z0-9\-]+\.[a-z]+",
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit)-[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance)\.com\.[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance)-[a-z0-9\-]+\.[a-z]+",
     # Common URL shorteners
     r"https?://bit\.ly",
     r"https?://goo\.gl",
