@@ -31,6 +31,13 @@ LEGITIMATE_DOMAINS = {
     "badoo": ["badoo.com"],
     "binance": ["binance.com"],
     "sharechat": ["sharechat.com"],
+    "paypal": ["paypal.com", "paypal.me"],
+    "stripe": ["stripe.com", "stripe.io"],
+    "payoneer": ["payoneer.com"],
+    "banks": [ # General list, can be expanded
+        "bankofamerica.com", "chase.com", "wellsfargo.com", "citibank.com",
+        "hsbc.com", "barclays.com", "deutsche-bank.com", "santander.com"
+    ],
     "general": ["google.com"]
 }
 
@@ -86,7 +93,11 @@ TECH_SUPPORT_SCAM_KEYWORDS = [
 PAYMENT_KEYWORDS = [
     "payment", "invoice", "bill", "outstanding balance", "transfer funds",
     "wire transfer", "gift card", "cryptocurrency", "bitcoin", "western union", "moneygram",
-    "urgent payment needed", "settle your account"
+    "urgent payment needed", "settle your account",
+    # Fintech specific
+    "paypal", "stripe", "payoneer", "cash app", "venmo", "zelle",
+    # Bank transfer specific
+    "bank transfer", "wire details", "account details", "iban", "swift code", "bic"
 ]
 
 
@@ -107,10 +118,12 @@ SUSPICIOUS_TLDS = [
     '.link', '.click', '.site', '.live', '.buzz', '.stream', '.download',
 ]
 
-# Pattern for detecting strings that look like cryptocurrency addresses
-CRYPTO_ADDRESS_PATTERNS = {
+# Pattern for detecting strings that look like financial identifiers
+FINANCIAL_ADDRESS_PATTERNS = {
     "BTC": re.compile(r'\b(1[a-km-zA-HJ-NP-Z1-9]{25,34}|3[a-km-zA-HJ-NP-Z1-9]{25,34}|bc1[a-zA-HJ-NP-Z0-9]{25,90})\b'),
     "ETH": re.compile(r'\b(0x[a-fA-F0-9]{40})\b'),
+    "IBAN": re.compile(r'\b([A-Z]{2}\d{2}[A-Z0-9]{11,30})\b'),
+    "SWIFT_BIC": re.compile(r'\b([A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?)\b'),
 }
 
 # Pattern for phone numbers
@@ -121,9 +134,14 @@ PHONE_NUMBER_PATTERN = re.compile(
 # Suspicious URL Patterns
 # These patterns aim to catch URLs that impersonate legitimate domains.
 SUSPICIOUS_URL_PATTERNS = [
-    # Impersonation using subdomains or hyphens
+    # Impersonation using subdomains or hyphens for social media and general platforms
     r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)\.com\.[a-z0-9\-]+\.[a-z]+",
     r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)-[a-z0-9\-]+\.[a-z]+",
+
+    # Impersonation for fintech and banks
+    r"https?://(?:[a-z0-9\-]+\.)*(?:paypal|stripe|payoneer|bankofamerica|chase|wellsfargo|citibank|hsbc|barclays)\.com\.[a-z0-9\-]+\.[a-z]+",
+    r"https?://(?:[a-z0-9\-]+\.)*(?:paypal|stripe|payoneer|bankofamerica|chase|wellsfargo|citibank|hsbc|barclays)-[a-z0-9\-]+\.[a-z]+",
+
     # Common URL shorteners
     r"https?://bit\.ly",
     r"https?://goo\.gl",
@@ -148,7 +166,10 @@ HEURISTIC_WEIGHTS = {
     "PAYMENT_REQUEST": 1.5,
     "SUSPICIOUS_URL_KEYWORD": 1.0,
     "SUSPICIOUS_TLD": 2.0,
-    "CRYPTO_ADDRESS": 2.5,
+    "BTC_ADDRESS": 2.5,
+    "ETH_ADDRESS": 2.5,
+    "IBAN_ADDRESS": 3.0,
+    "SWIFT_BIC_ADDRESS": 3.0,
     "PHONE_NUMBER_UNSOLICITED": 1.0,
     "SUSPICIOUS_URL_PATTERN": 3.0, # High weight for matching a suspicious URL pattern
 }
