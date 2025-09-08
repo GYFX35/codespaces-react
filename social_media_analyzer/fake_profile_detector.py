@@ -196,6 +196,47 @@ FAKE_PROFILE_INDICATORS = [
     }
 ]
 
+# --- Identity Usurpation Indicators ---
+IDENTITY_USURPATION_INDICATORS = [
+    {
+        "id": "is_new_or_backup_account",
+        "prompt": "Is the profile claiming to be a 'new' or 'backup' account for someone you already know?",
+        "weight_if_yes": 3,
+        "details_if_yes": "Scammers often create fake accounts claiming to have lost access to their old one."
+    },
+    {
+        "id": "exact_match_of_known_profile",
+        "prompt": "Does the profile use the exact same name and profile picture as an existing profile of someone you know?",
+        "weight_if_yes": 3,
+        "details_if_yes": "Directly cloning a profile is a major red flag for impersonation."
+    },
+    {
+        "id": "unverified_new_account_claim",
+        "prompt": "Have you verified with the person through a different, trusted communication method that this new profile is actually theirs?",
+        "weight_if_no": 2, # Note: Weight is applied if the answer is 'no'
+        "details_if_no": "If you haven't verified the new account, it's highly suspicious."
+    },
+    {
+        "id": "inconsistent_behavior",
+        "prompt": "Are there inconsistencies in writing style, language, or behavior compared to the person you know?",
+        "weight_if_yes": 2,
+        "details_if_yes": "A change in communication style can indicate a different person is behind the account."
+    },
+    {
+        "id": "suspicious_friend_list",
+        "prompt": "Does the friend list seem unusually small, or does it lack mutual friends you'd expect?",
+        "weight_if_yes": 1,
+        "details_if_yes": "Impersonation accounts often have hastily assembled or illogical friend lists."
+    },
+    {
+        "id": "urgent_requests_for_money_or_info",
+        "prompt": "Is the account making urgent requests for money, gift cards, or personal information, often citing an emergency?",
+        "weight_if_yes": 3,
+        "details_if_yes": "This is a classic scam tactic used by impersonators to exploit the trust of friends and family."
+    }
+]
+
+
 def guide_reverse_image_search(image_url=None):
     """Opens browser tabs to guide the user through reverse image search."""
     print("\n--- Guiding Reverse Image Search ---")
@@ -287,9 +328,87 @@ def analyze_profile_based_on_user_input(profile_url, platform):
         "positive_indicators": positive_indicators,
     }
 
+
+def analyze_identity_usurpation(profile_url, platform):
+    """
+    Guides the user through a checklist to assess if a profile is impersonating someone.
+    """
+    print(f"\n--- Analyzing {platform.capitalize()} Profile for Identity Usurpation (Manual Check) ---")
+    print("This check is designed to help you determine if a profile is impersonating someone you know.")
+    print(f"Please open the profile in your browser or app: {profile_url}")
+    webbrowser.open(profile_url)
+
+    user_responses = {}
+    total_score = 0
+    positive_indicators = []
+
+    print("\nYou will now be asked a series of questions about the profile.")
+    for indicator in IDENTITY_USURPATION_INDICATORS:
+        while True:
+            answer = input(f"{indicator['prompt']} (yes/no): ").strip().lower()
+            if answer in ['yes', 'no']:
+                user_responses[indicator['id']] = answer
+                if answer == 'yes' and 'weight_if_yes' in indicator:
+                    total_score += indicator['weight_if_yes']
+                    positive_indicators.append(f"- {indicator['prompt']} ({indicator['details_if_yes']})")
+                elif answer == 'no' and 'weight_if_no' in indicator:
+                    total_score += indicator['weight_if_no']
+                    positive_indicators.append(f"- (Unverified) {indicator['prompt']} ({indicator['details_if_no']})")
+                break
+            else:
+                print("Invalid input. Please answer 'yes' or 'no'.")
+
+    print("\n--- Identity Usurpation Analysis Results ---")
+    print(f"Profile URL: {profile_url}")
+
+    if not positive_indicators:
+        print("Based on your answers, no strong indicators of identity usurpation were identified.")
+    else:
+        print("The following indicators suggestive of identity usurpation were noted:")
+        for pi in positive_indicators:
+            print(pi)
+
+        print(f"\nOverall 'impersonation suspicion score': {total_score}")
+        if total_score <= 3:
+            print("Assessment: Low likelihood of impersonation.")
+        elif total_score <= 6:
+            print("Assessment: Medium likelihood. Exercise extreme caution and verify independently.")
+        else:
+            print("Assessment: High likelihood. Avoid interaction and report the profile.")
+
+    print("\nDisclaimer: This analysis is based SOLELY on your manual observations.")
+    print("Always use your best judgment. If you suspect impersonation, contact the person being impersonated through a trusted channel and report the fake profile to the platform.")
+
+    return {
+        "profile_url": profile_url,
+        "platform": platform,
+        "score": total_score,
+        "positive_indicators": positive_indicators,
+    }
+
+
 if __name__ == '__main__':
     print("Fake Profile Detector - Manual Checklist Tool")
-    test_platform = input("Enter the social media platform to simulate analyzing (e.g., instagram): ").strip().lower()
+
+    while True:
+        print("\nSelect the type of analysis to perform:")
+        print("1. General Fake Profile Analysis")
+        print("2. Identity Usurpation Analysis")
+
+        try:
+            choice = int(input("Enter your choice (1-2): "))
+            if choice in [1, 2]:
+                break
+            else:
+                print("Invalid choice. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    test_platform = input("\nEnter the social media platform to simulate analyzing (e.g., instagram): ").strip().lower()
     test_profile_url = input(f"Enter a {test_platform.capitalize()} profile URL to simulate analyzing: ").strip()
+
     if test_profile_url and test_platform:
-        analyze_profile_based_on_user_input(test_profile_url, test_platform)
+        if choice == 1:
+            analyze_profile_based_on_user_input(test_profile_url, test_platform)
+        elif choice == 2:
+            analyze_identity_usurpation(test_profile_url, test_platform)
