@@ -1,4 +1,5 @@
 import re
+import urllib.request
 from urllib.parse import urlparse
 from .heuristics import (
     URGENCY_KEYWORDS,
@@ -130,3 +131,21 @@ def analyze_text_for_scams(text_content, platform=None):
         "urls_analyzed": urls_analyzed_details
     }
 
+def analyze_url_content(url):
+    """
+    Fetches the content of a URL and analyzes it for scams.
+    """
+    try:
+        # Add a user-agent to avoid being blocked by some websites
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        request = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(request, timeout=10) as response:
+            if response.status == 200:
+                html_content = response.read().decode('utf-8', errors='ignore')
+                # Simple regex to strip HTML tags, not perfect but avoids new dependencies
+                text_content = re.sub(r'<[^>]+>', '', html_content)
+                return analyze_text_for_scams(text_content, platform="general_web")
+            else:
+                return {"error": f"Failed to fetch URL: HTTP status code {response.status}"}
+    except Exception as e:
+        return {"error": f"An error occurred: {e}"}

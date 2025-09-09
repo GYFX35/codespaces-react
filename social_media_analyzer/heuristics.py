@@ -43,7 +43,22 @@ LEGITIMATE_DOMAINS = {
         "bankofamerica.com", "chase.com", "wellsfargo.com", "citibank.com",
         "hsbc.com", "barclays.com", "deutsche-bank.com", "santander.com"
     ],
-    "general": ["google.com"]
+    "general": ["google.com"],
+    "general_web": [
+        "wikipedia.org", "yahoo.com", "live.com", "microsoft.com",
+        "apple.com", "netflix.com", "twitch.tv", "ebay.com",
+        "craigslist.org", "imdb.com", "nytimes.com", "theguardian.com",
+        "bbc.com", "cnn.com", "espn.com", "walmart.com", "target.com",
+        "bestbuy.com", "homedepot.com", "lowes.com", "costco.com",
+        "stackoverflow.com", "github.com", "gitlab.com", "wordpress.org",
+        "wordpress.com", "blogger.com", "tumblr.com", "medium.com",
+        "quora.com", "flickr.com", "adobe.com", "soundcloud.com",
+        "spotify.com", "dropbox.com", "box.com", "slack.com",
+        "salesforce.com", "oracle.com", "sap.com", "ibm.com", "dell.com",
+        "hp.com", "intel.com", "amd.com", "nvidia.com", "booking.com",
+        "airbnb.com", "expedia.com", "tripadvisor.com", "fedex.com",
+        "ups.com", "usps.com", "dhl.com"
+    ]
 }
 
 
@@ -138,27 +153,48 @@ PHONE_NUMBER_PATTERN = re.compile(
 
 # Suspicious URL Patterns
 # These patterns aim to catch URLs that impersonate legitimate domains.
-SUSPICIOUS_URL_PATTERNS = [
-    # Impersonation using subdomains or hyphens for social media and general platforms
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)\.com\.[a-z0-9\-]+\.[a-z]+",
-    r"https?://(?:[a-z0-9\-]+\.)*(?:facebook|fb|instagram|whatsapp|tiktok|tinder|snapchat|wechat|telegram|twitter|pinterest|linkedin|line|discord|teams|zoom|amazon|alibaba|youtube|skype|vk|reddit|viber|signal|badoo|binance|sharechat)-[a-z0-9\-]+\.[a-z]+",
+def generate_suspicious_url_patterns(legitimate_domains):
+    """
+    Generates regex patterns to detect URLs impersonating legitimate domains.
+    """
+    all_service_keywords = set()
+    for platform, domains in legitimate_domains.items():
+        if platform not in ["general", "general_web", "banks"]:
+            all_service_keywords.add(platform)
+        for domain in domains:
+            # Add the core part of the domain, e.g., "facebook" from "facebook.com"
+            keyword = domain.split('.')[0]
+            if keyword != "com" and len(keyword) > 2:
+                all_service_keywords.add(keyword)
 
-    # Impersonation for fintech and banks
-    r"https?://(?:[a-z0-9\-]+\.)*(?:paypal|stripe|payoneer|bankofamerica|chase|wellsfargo|citibank|hsbc|barclays)\.com\.[a-z0-9\-]+\.[a-z]+",
-    r"https?://(?:[a-z0-9\-]+\.)*(?:paypal|stripe|payoneer|bankofamerica|chase|wellsfargo|citibank|hsbc|barclays)-[a-z0-9\-]+\.[a-z]+",
+    # Remove very generic keywords that might cause false positives
+    all_service_keywords -= {'google', 'apple', 'microsoft'}
 
-    # Common URL shorteners
-    r"https?://bit\.ly",
-    r"https?://goo\.gl",
-    r"https?://t\.co",
-    # IP Address URLs
-    r"https?://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}",
-    # Generic suspicious keywords in the domain
-    r"https?://[^/]*(?:login|secure|account|update|verify|support|admin)[^/]*\.(?:biz|info|tk|ml|ga|cf|gq|xyz|club|top|loan|work|online|site)",
-    # Very long subdomains or many hyphens
-    r"https?://(?:[a-z0-9\-]+\.){4,}",
-    r"https?://[^/]*\-.*\-.*\-.*[a-z]+",
-]
+    # Create a regex group of all keywords
+    keyword_group = "|".join(re.escape(k) for k in sorted(list(all_service_keywords), key=len, reverse=True))
+
+    patterns = [
+        # Impersonation using subdomains or hyphens, e.g., "facebook.security-alert.com" or "facebook-login.com"
+        # This now uses the dynamically generated keyword group
+        r"https?://(?:[a-z0-9\-]+\.)*(?:" + keyword_group + r")\.(?:[a-z0-9\-]+)\.(?:[a-z]+)",
+        r"https?://(?:[a-z0-9\-]+\.)*(?:" + keyword_group + r")-(?:[a-z0-9\-]+)\.(?:[a-z]+)",
+
+        # Common URL shorteners
+        r"https?://bit\.ly",
+        r"https?://goo\.gl",
+        r"https?://t\.co",
+        # IP Address URLs
+        r"https?://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}",
+        # Generic suspicious keywords in the domain combined with suspicious TLDs
+        r"https?://[^/]*(?:login|secure|account|update|verify|support|admin)[^/]*\.(?:biz|info|tk|ml|ga|cf|gq|xyz|club|top|loan|work|online|site)",
+        # Very long subdomains (potential phishing)
+        r"https?://(?:[a-z0-9\-]+\.){4,}",
+        # Multiple hyphens in the domain (potential phishing)
+        r"https?://[^/]*\-.*\-.*\-.*[a-z]+",
+    ]
+    return patterns
+
+SUSPICIOUS_URL_PATTERNS = generate_suspicious_url_patterns(LEGITIMATE_DOMAINS)
 
 
 # --- Scoring Weights ---
