@@ -44,7 +44,7 @@ def analyze_social_media():
         "wechat", "telegram", "twitter", "pinterest", "linkedin", "line",
         "discord", "teams", "zoom", "amazon", "alibaba", "youtube", "skype",
         "vk", "reddit", "email", "viber", "signal", "badoo", "binance",
-        "sharechat", "messenger", "qzone", "qq", "vimeo", "musical.ly"
+        "sharechat", "messenger", "qzone", "qq", "vimeo", "musical.ly", "kuaishou"
     ])
 
     while True:

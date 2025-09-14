@@ -26,6 +26,14 @@ if __name__ == '__main__':
         "Bank Transfer Fraud": {
             "message": "Urgent invoice payment required. Please transfer the amount to IBAN DE89370400440532013000, SWIFT/BIC COBADEFFXXX. Your account will be suspended otherwise.",
             "platform": "banks"
+        },
+        "Kuaishou Benign Case": {
+            "message": "Check out my new video on www.kwai.com/my-awesome-video! #kuaishou",
+            "platform": "kuaishou"
+        },
+        "Kuaishou Phishing Attempt": {
+            "message": "URGENT: Your Kuaishou account is at risk! Verify at http://kuaishou-login.net to secure it and get free followers.",
+            "platform": "kuaishou"
         }
     }
 
