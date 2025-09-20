@@ -8,6 +8,7 @@ LEGITIMATE_DOMAINS = {
     "instagram": ["instagram.com", "instagr.am"],
     "whatsapp": ["whatsapp.com", "wa.me"],
     "tiktok": ["tiktok.com"],
+    "douyin": ["douyin.com"],
     "kuaishou": ["kuaishou.com", "kwai.com", "kwai.net"],
     "tinder": ["tinder.com", "gotinder.com"],
     "snapchat": ["snapchat.com"],

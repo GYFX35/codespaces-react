@@ -134,6 +134,11 @@ PLATFORM_SPECIFIC_ADVICE = {
         "Be wary of profiles that post a large amount of spam or promotional content.",
         "Check for the 'verified' badge on profiles of public figures.",
         "Do not engage with users who ask for personal information or money in private chat."
+    ],
+    "douyin": [
+        "Be cautious of accounts that share QR codes in videos or comments, as they may lead to malicious websites.",
+        "Look for accounts with very few original videos but a high number of followers.",
+        "Be wary of users who send direct messages with links to external shopping or gambling sites."
     ]
 }
 
