@@ -1,1 +1,3 @@
 requests
+nltk
+textblob

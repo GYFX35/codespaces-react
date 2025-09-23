@@ -1,27 +1,24 @@
+import React, { useState } from 'react';
 import './App.css';
+import ScamAnalyzer from './ScamAnalyzer';
+import FakeNewsAnalyzer from './FakeNewsAnalyzer';
 
 function App() {
+  const [view, setView] = useState('scam');
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
+        <h1>Universal Security Analyzer</h1>
+        <nav>
+          <button onClick={() => setView('scam')}>Scam Analyzer</button>
+          <button onClick={() => setView('fake-news')}>Fake News Analyzer</button>
+        </nav>
       </header>
+      <main>
+        {view === 'scam' && <ScamAnalyzer />}
+        {view === 'fake-news' && <FakeNewsAnalyzer />}
+      </main>
     </div>
   );
 }
