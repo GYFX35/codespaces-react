@@ -239,6 +239,7 @@ HEURISTIC_WEIGHTS = {
     "SWIFT_BIC_ADDRESS": 3.0,
     "PHONE_NUMBER_UNSOLICITED": 1.0,
     "SUSPICIOUS_URL_PATTERN": 3.0, # High weight for matching a suspicious URL pattern
+    "GOOGLE_SAFE_BROWSING_HIT": 10.0, # Very high weight for a positive Google Safe Browsing match
 }
 
 if __name__ == '__main__':

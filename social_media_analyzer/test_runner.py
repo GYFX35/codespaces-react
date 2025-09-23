@@ -1,6 +1,8 @@
+import unittest
+from unittest.mock import patch, Mock
 from social_media_analyzer.scam_detector import analyze_text_for_scams
 
-if __name__ == '__main__':
+def run_manual_tests():
     # Example Usage
     test_cases = {
         "Instagram Phishing": {
@@ -48,3 +50,53 @@ if __name__ == '__main__':
         print("URLs Analyzed:")
         for url_info in analysis_result['urls_analyzed']:
             print(f"  - URL: {url_info['url']}, Suspicious: {url_info['is_suspicious']}, Reason: {url_info['reason']}")
+
+class TestScamDetector(unittest.TestCase):
+    @patch('social_media_analyzer.scam_detector.requests.post')
+    def test_google_safe_browsing_malicious(self, mock_post):
+        # Mock the API response for a malicious URL
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            "matches": [
+                {
+                    "threatType": "MALWARE",
+                    "platformType": "ANY_PLATFORM",
+                    "threat": {"url": "http://malware.testing.google.test/testing/malware/"},
+                }
+            ]
+        }
+        mock_post.return_value = mock_response
+
+        message = "check this out http://malware.testing.google.test/testing/malware/"
+        result = analyze_text_for_scams(message, api_key="fake_key")
+
+        self.assertTrue(any("Google Safe Browsing" in reason for reason in result["indicators_found"]))
+        self.assertEqual(result['urls_analyzed'][0]['is_suspicious'], True)
+
+    @patch('social_media_analyzer.scam_detector.requests.post')
+    def test_google_safe_browsing_clean(self, mock_post):
+        # Mock the API response for a clean URL
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {}
+        mock_post.return_value = mock_response
+
+        message = "this is a clean site http://www.google.com"
+        result = analyze_text_for_scams(message, api_key="fake_key")
+
+        self.assertFalse(any("Google Safe Browsing" in reason for reason in result["indicators_found"]))
+        self.assertEqual(result['urls_analyzed'][0]['is_suspicious'], False)
+
+if __name__ == '__main__':
+    run_manual_tests()
+    # Run unit tests
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestScamDetector))
+    runner = unittest.TextTestRunner()
+    print("\n--- Running Unit Tests for Google Safe Browsing Integration ---")
+    result = runner.run(suite)
+    if result.wasSuccessful():
+        print("All tests passed!")
+    else:
+        print("Some tests failed.")

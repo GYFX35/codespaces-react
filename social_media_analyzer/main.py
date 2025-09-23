@@ -1,6 +1,11 @@
+import os
 from . import fake_profile_detector
 from . import scam_detector
 from . import fake_news_detector
+
+def get_api_key():
+    """Gets the Google API key from environment variables."""
+    return os.environ.get("GOOGLE_API_KEY")
 
 def analyze_news_url():
     """Analyzes a news URL for potential fake news."""
@@ -22,7 +27,7 @@ def analyze_news_url():
         for indicator in result['indicators_found']:
             print(f"- {indicator}")
 
-def analyze_website_url():
+def analyze_website_url(api_key):
     """Analyzes a website URL for potential scams."""
     url_to_check = input("Please enter the full URL you want to analyze: ").strip()
     if not url_to_check:
@@ -34,7 +39,7 @@ def analyze_website_url():
         url_to_check = 'http://' + url_to_check
 
     print("\n--- Analyzing URL ---")
-    is_susp, reason = scam_detector.is_url_suspicious(url_to_check, platform="general_web")
+    is_susp, reason = scam_detector.is_url_suspicious(url_to_check, platform="general_web", api_key=api_key)
     if is_susp:
         print(f"\n[!] The URL '{url_to_check}' is flagged as IMMEDIATELY SUSPICIOUS.")
         print(f"Reason: {reason}")
@@ -58,7 +63,7 @@ def analyze_website_url():
         for indicator in content_result['indicators_found']:
             print(f"- {indicator}")
 
-def analyze_social_media():
+def analyze_social_media(api_key):
     """Handles the analysis of social media platforms."""
     platforms = sorted([
         "facebook", "instagram", "whatsapp", "tiktok", "tinder", "snapchat",
@@ -108,7 +113,7 @@ def analyze_social_media():
             elif analysis_choice == 3:
                 message = input("Paste the message you want to analyze: ").strip()
                 if message:
-                    result = scam_detector.analyze_text_for_scams(message, platform)
+                    result = scam_detector.analyze_text_for_scams(message, platform, api_key=api_key)
                     print("\n--- Scam Analysis Results ---")
                     print(f"Score: {result['score']} (Higher is more suspicious)")
                     print("Indicators Found:")
@@ -127,8 +132,13 @@ def analyze_social_media():
 
 def main():
     """Main function to run the security analyzer."""
+    api_key = get_api_key()
     print("--- Universal Security Analyzer ---")
     print("This tool helps you analyze social media, messages, and websites for potential scams and fake news.")
+    if not api_key:
+        print("\n[!] Google Safe Browsing API key not found.")
+        print("    To enable real-time URL checking against Google's threat database,")
+        print("    please set the GOOGLE_API_KEY environment variable.")
 
     while True:
         print("\n--- Main Menu ---")
@@ -140,9 +150,9 @@ def main():
         try:
             choice = int(input("Enter your choice (1-4): "))
             if choice == 1:
-                analyze_social_media()
+                analyze_social_media(api_key)
             elif choice == 2:
-                analyze_website_url()
+                analyze_website_url(api_key)
             elif choice == 3:
                 analyze_news_url()
             elif choice == 4:
