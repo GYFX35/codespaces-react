@@ -123,6 +123,27 @@ PAYMENT_KEYWORDS = [
 ]
 
 
+# --- Fake News Heuristics ---
+
+FAKE_NEWS_DOMAINS = [
+    "abcnews.com.co", "cnn.com.de", "daily-mail.com.de",
+    "infowars.com", "naturalnews.com", "breitbart.com",
+    "worldnewsdailyreport.com", "theonion.com", # The Onion is satire, but often mistaken for real news
+    "yournewswire.com", "davidwolfe.com"
+]
+
+SENSATIONALIST_KEYWORDS = [
+    "shocking", "bombshell", "secret", "cover-up",
+    "miracle", "cure", "unbelievable", "outrageous",
+    "conspiracy", "hidden truth", "what they don't want you to know", "fake news"
+]
+
+CLICKBAIT_PATTERNS = [
+    r"you won't believe", r"will shock you", r"number \d will amaze you",
+    r"this one weird trick", r"doctors hate him", r"the truth about",
+    r"scientists baffled", r"what happened next", r"secret to"
+]
+
 # --- Regular Expression Patterns ---
 
 # Basic URL detection
@@ -201,6 +222,9 @@ SUSPICIOUS_URL_PATTERNS = generate_suspicious_url_patterns(LEGITIMATE_DOMAINS)
 
 # --- Scoring Weights ---
 HEURISTIC_WEIGHTS = {
+    "KNOWN_FAKE_NEWS_DOMAIN": 5.0,
+    "SENSATIONALIST_KEYWORD": 1.0,
+    "CLICKBAIT_PATTERN": 1.5,
     "URGENCY": 1.5,
     "SENSITIVE_INFO": 2.5,
     "TOO_GOOD_TO_BE_TRUE": 2.0,

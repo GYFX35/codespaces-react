@@ -1,5 +1,26 @@
 from . import fake_profile_detector
 from . import scam_detector
+from . import fake_news_detector
+
+def analyze_news_url():
+    """Analyzes a news URL for potential fake news."""
+    url_to_check = input("Please enter the full URL of the news article you want to analyze: ").strip()
+    if not url_to_check:
+        print("No URL entered.")
+        return
+
+    print("\n--- Analyzing News URL for Fake News ---")
+    result = fake_news_detector.analyze_url_for_fake_news(url_to_check)
+
+    if "error" in result:
+        print(f"Could not analyze news URL: {result['error']}")
+    elif not result.get("indicators_found"):
+        print("No specific fake news indicators were found.")
+    else:
+        print(f"Score: {result['score']} (Higher is more suspicious)")
+        print("Indicators Found:")
+        for indicator in result['indicators_found']:
+            print(f"- {indicator}")
 
 def analyze_website_url():
     """Analyzes a website URL for potential scams."""
@@ -107,21 +128,24 @@ def analyze_social_media():
 def main():
     """Main function to run the security analyzer."""
     print("--- Universal Security Analyzer ---")
-    print("This tool helps you analyze social media, messages, and websites for potential scams.")
+    print("This tool helps you analyze social media, messages, and websites for potential scams and fake news.")
 
     while True:
         print("\n--- Main Menu ---")
         print("1. Analyze a Social Media Platform")
-        print("2. Analyze a Website URL")
-        print("3. Exit")
+        print("2. Analyze a Website URL for Scams")
+        print("3. Analyze a News URL for Fake News")
+        print("4. Exit")
 
         try:
-            choice = int(input("Enter your choice (1-3): "))
+            choice = int(input("Enter your choice (1-4): "))
             if choice == 1:
                 analyze_social_media()
             elif choice == 2:
                 analyze_website_url()
             elif choice == 3:
+                analyze_news_url()
+            elif choice == 4:
                 print("Exiting. Stay safe!")
                 break
             else:
