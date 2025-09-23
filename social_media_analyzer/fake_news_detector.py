@@ -1,6 +1,7 @@
 import re
 import urllib.request
 from urllib.parse import urlparse
+import nltk
 from .heuristics import (
     FAKE_NEWS_DOMAINS,
     SENSATIONALIST_KEYWORDS,
@@ -11,6 +12,12 @@ from .heuristics import (
 def analyze_url_for_fake_news(url):
     """
     Analyzes a URL for indicators of fake news.
+
+    NOTE: This function requires the following NLTK data to be downloaded:
+    - 'punkt'
+    - 'averaged_perceptron_tagger'
+    - 'maxent_ne_chunker'
+    - 'words'
     """
     if not url.startswith(('http://', 'https://')):
         url = 'http://' + url
@@ -19,6 +26,10 @@ def analyze_url_for_fake_news(url):
 
     score = 0.0
     indicators_found = []
+    named_entities = {
+        "organizations": [],
+        "persons": [],
+    }
 
     # 1. Check against known fake news domains
     if domain in FAKE_NEWS_DOMAINS:
@@ -51,6 +62,21 @@ def analyze_url_for_fake_news(url):
                         score += HEURISTIC_WEIGHTS.get("CLICKBAIT_PATTERN", 1.5)
                         indicators_found.append(f"Found clickbait pattern: '{pattern}'")
 
+                # 5. Named Entity Recognition
+                tokens = nltk.word_tokenize(text_content)
+                tagged = nltk.pos_tag(tokens)
+                entities = nltk.ne_chunk(tagged)
+
+                for entity in entities:
+                    if isinstance(entity, nltk.Tree):
+                        entity_text = " ".join([word for word, tag in entity.leaves()])
+                        if entity.label() == 'ORGANIZATION':
+                            if entity_text not in named_entities["organizations"]:
+                                named_entities["organizations"].append(entity_text)
+                        elif entity.label() == 'PERSON':
+                            if entity_text not in named_entities["persons"]:
+                                named_entities["persons"].append(entity_text)
+
             else:
                 return {"error": f"Failed to fetch URL: HTTP status code {response.status}"}
     except Exception as e:
@@ -59,5 +85,6 @@ def analyze_url_for_fake_news(url):
     return {
         "url": url,
         "score": round(score, 2),
-        "indicators_found": indicators_found
+        "indicators_found": indicators_found,
+        "named_entities": named_entities
     }

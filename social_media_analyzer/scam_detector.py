@@ -3,6 +3,7 @@ import urllib.request
 import requests
 import os
 from urllib.parse import urlparse
+from textblob import TextBlob
 from .heuristics import (
     URGENCY_KEYWORDS,
     SENSITIVE_INFO_KEYWORDS,
@@ -127,7 +128,15 @@ def analyze_text_for_scams(text_content, platform=None, api_key=None):
     indicators_found = []
     urls_analyzed_details = []
 
-    # 1. Keyword-based checks
+    # 1. Sentiment Analysis
+    blob = TextBlob(text_content)
+    if blob.sentiment.polarity < -0.5:
+        message = "Strong negative sentiment detected in text."
+        if message not in indicators_found:
+            indicators_found.append(message)
+            score += HEURISTIC_WEIGHTS.get("NEGATIVE_SENTIMENT", 2.0)
+
+    # 2. Keyword-based checks
     keyword_checks = {
         "URGENCY": URGENCY_KEYWORDS,
         "SENSITIVE_INFO": SENSITIVE_INFO_KEYWORDS,
@@ -145,7 +154,7 @@ def analyze_text_for_scams(text_content, platform=None, api_key=None):
                     indicators_found.append(message)
                     score += HEURISTIC_WEIGHTS.get(category, 1.0)
 
-    # 2. Regex-based checks
+    # 3. Regex-based checks
     found_urls = URL_PATTERN.findall(text_content)
     for url_str in found_urls:
         is_susp, reason = is_url_suspicious(url_str, platform, api_key)
@@ -159,7 +168,7 @@ def analyze_text_for_scams(text_content, platform=None, api_key=None):
             indicators_found.append(f"Suspicious URL found: {url_str} (Reason: {reason})")
         urls_analyzed_details.append(url_analysis)
 
-    # 3. Financial Identifiers
+    # 4. Financial Identifiers
     for id_name, pattern in FINANCIAL_ADDRESS_PATTERNS.items():
         if pattern.search(text_content):
             message = f"Potential {id_name} identifier found."
@@ -167,7 +176,7 @@ def analyze_text_for_scams(text_content, platform=None, api_key=None):
                 indicators_found.append(message)
                 score += HEURISTIC_WEIGHTS.get(f"{id_name}_ADDRESS", 2.5)
 
-    # 4. Phone Numbers
+    # 5. Phone Numbers
     if PHONE_NUMBER_PATTERN.search(text_content):
         message = "Phone number detected in text."
         if message not in indicators_found:
