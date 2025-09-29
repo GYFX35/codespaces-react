@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch, Mock
-from social_media_analyzer.scam_detector import analyze_text_for_scams
+from .scam_detector import analyze_text_for_scams
+from .test_teen_protection import TestTeenProtection
 
 def run_manual_tests():
     # Example Usage
@@ -91,11 +92,13 @@ class TestScamDetector(unittest.TestCase):
 if __name__ == '__main__':
     run_manual_tests()
     # Run unit tests
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestScamDetector))
+    scam_suite = unittest.makeSuite(TestScamDetector)
+    teen_suite = unittest.makeSuite(TestTeenProtection)
+    all_tests = unittest.TestSuite([scam_suite, teen_suite])
+
     runner = unittest.TextTestRunner()
-    print("\n--- Running Unit Tests for Google Safe Browsing Integration ---")
-    result = runner.run(suite)
+    print("\n--- Running All Unit Tests ---")
+    result = runner.run(all_tests)
     if result.wasSuccessful():
         print("All tests passed!")
     else:

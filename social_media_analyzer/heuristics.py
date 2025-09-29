@@ -122,6 +122,37 @@ PAYMENT_KEYWORDS = [
     "bank transfer", "wire details", "account details", "iban", "swift code", "bic"
 ]
 
+# --- Teenager Protection Heuristics ---
+
+# Keywords/phrases related to cyberbullying
+CYBERBULLYING_KEYWORDS = [
+    "loser", "stupid", "idiot", "hate you", "ugly", "fat",
+    "kill yourself", "kys", "go die", "nobody likes you", "freak",
+    "weirdo", "everyone hates you", "you're worthless", "pathetic",
+    "troll", "noob", "poser", "wannabe", "go away",
+    "social reject", "outcast", "misfit", "dork", "nerd"
+]
+
+# Keywords/phrases related to inappropriate content (sexual, violent, etc.)
+INAPPROPRIATE_CONTENT_KEYWORDS = [
+    # Sexually suggestive
+    "nude", "sexting", "send nudes", "horny", "slut", "whore", "dick", "pussy",
+    "porn", "sexy pic", "private parts", "hook up",
+    # Violence
+    "kill", "murder", "blood", "gun", "knife", "fight me",
+    "i will hurt you", "beat you up", "gonna get you",
+    # Drugs/Alcohol
+    "drugs", "weed", "cocaine", "pills", "get high", "drunk", "wasted"
+]
+
+# Keywords/phrases indicating oversharing of personal information
+PRIVACY_RISK_KEYWORDS = [
+    "my address is", "i live at", "my phone number is", "call me at",
+    "my full name is", "my school is", "i go to [school_name]",
+    "my mom's name is", "my dad's name is",
+    "i'm home alone", "parents are out", "my password is"
+]
+
 
 # --- Fake News Heuristics ---
 
@@ -240,6 +271,10 @@ HEURISTIC_WEIGHTS = {
     "PHONE_NUMBER_UNSOLICITED": 1.0,
     "SUSPICIOUS_URL_PATTERN": 3.0, # High weight for matching a suspicious URL pattern
     "GOOGLE_SAFE_BROWSING_HIT": 10.0, # Very high weight for a positive Google Safe Browsing match
+    # Teenager Protection Weights
+    "CYBERBULLYING": 2.5,
+    "INAPPROPRIATE_CONTENT": 3.0,
+    "PRIVACY_RISK": 3.5,
 }
 
 if __name__ == '__main__':
