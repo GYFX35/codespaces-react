@@ -2,6 +2,7 @@ import os
 from . import fake_profile_detector
 from . import scam_detector
 from . import fake_news_detector
+from . import teen_protection
 
 def get_api_key():
     """Gets the Google API key from environment variables."""
@@ -130,6 +131,48 @@ def analyze_social_media(api_key):
         except ValueError:
             print("Invalid input. Please enter a number.")
 
+def analyze_for_teen_risks():
+    """Handles analysis for risks relevant to teenagers."""
+    print("\n--- Teenager Protection Tools ---")
+    print("Select the type of analysis you want to perform:")
+    print("1. Analyze text for Cyberbullying")
+    print("2. Analyze text for Inappropriate Content")
+    print("3. Analyze text for Privacy Risks (Oversharing)")
+
+    try:
+        choice = int(input("Enter your choice (1-3): "))
+        if choice not in [1, 2, 3]:
+            print("Invalid choice. Please try again.")
+            return
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+        return
+
+    text_to_analyze = input("Please paste the text you want to analyze: ").strip()
+    if not text_to_analyze:
+        print("No text entered.")
+        return
+
+    result = {}
+    if choice == 1:
+        print("\n--- Analyzing for Cyberbullying ---")
+        result = teen_protection.analyze_for_cyberbullying(text_to_analyze)
+    elif choice == 2:
+        print("\n--- Analyzing for Inappropriate Content ---")
+        result = teen_protection.analyze_for_inappropriate_content(text_to_analyze)
+    elif choice == 3:
+        print("\n--- Analyzing for Privacy Risks ---")
+        result = teen_protection.analyze_for_privacy_risks(text_to_analyze)
+
+    print(f"Score: {result['score']} (Higher is more suspicious)")
+    if result['indicators_found']:
+        print("Indicators Found:")
+        for indicator in result['indicators_found']:
+            print(f"- {indicator}")
+    else:
+        print("No specific risk indicators were found.")
+
+
 def main():
     """Main function to run the security analyzer."""
     api_key = get_api_key()
@@ -145,10 +188,11 @@ def main():
         print("1. Analyze a Social Media Platform")
         print("2. Analyze a Website URL for Scams")
         print("3. Analyze a News URL for Fake News")
-        print("4. Exit")
+        print("4. Teenager Protection Tools")
+        print("5. Exit")
 
         try:
-            choice = int(input("Enter your choice (1-4): "))
+            choice = int(input("Enter your choice (1-5): "))
             if choice == 1:
                 analyze_social_media(api_key)
             elif choice == 2:
@@ -156,6 +200,8 @@ def main():
             elif choice == 3:
                 analyze_news_url()
             elif choice == 4:
+                analyze_for_teen_risks()
+            elif choice == 5:
                 print("Exiting. Stay safe!")
                 break
             else:
