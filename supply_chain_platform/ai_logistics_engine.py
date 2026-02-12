@@ -37,6 +37,40 @@ class AILogisticsEngine:
         else:
             return "LOW: Healthy inventory levels."
 
+class DataEngineeringPipe:
+    """Simulates Data Engineering processes for Supply Chain Analytics."""
+
+    def simulate_pipeline(self, batch_size=100):
+        print(f"[*] Ingesting {batch_size} events from IoT Gateway...")
+        time.sleep(0.5)
+        print(f"[*] Processing: Normalizing timestamps and cleaning null values...")
+        time.sleep(0.5)
+        print(f"[*] Transform: Calculating rolling averages for sensor telemetry...")
+        time.sleep(0.5)
+        print(f"[*] Load: Storing results in Data Warehouse and Vector DB...")
+        return {"status": "SUCCESS", "records_processed": batch_size, "latency_ms": random.randint(100, 500)}
+
+class TransportOptimizer:
+    """Advanced Transportation & Route Optimization."""
+
+    def calculate_multimodal_cost(self, distance, weight, mode='Truck'):
+        """Calculates cost based on transport mode."""
+        rates = {
+            "Truck": 1.5,   # $ per km per ton
+            "Rail": 0.8,
+            "Sea": 0.2,
+            "Air": 5.0
+        }
+        rate = rates.get(mode, 1.5)
+        cost = distance * (weight / 1000) * rate
+        carbon_footprint = distance * (weight / 1000) * (rate * 0.1) # Simplified CO2 estimate
+
+        return {
+            "mode": mode,
+            "estimated_cost_usd": round(cost, 2),
+            "carbon_footprint_kg": round(carbon_footprint, 2)
+        }
+
 if __name__ == "__main__":
     engine = AILogisticsEngine()
     print(f"Predicted Delay: {engine.predict_delivery_delay(5000, 'storm')} hours")
