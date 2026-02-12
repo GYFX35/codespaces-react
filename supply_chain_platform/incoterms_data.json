@@ -1,0 +1,22 @@
+{
+  "EXW": {
+    "name": "Ex Works",
+    "description": "The seller makes the goods available at their premises. The buyer bears all costs and risks of moving the goods to the destination.",
+    "responsibilities": "Buyer covers all costs and risks from the seller's door."
+  },
+  "FOB": {
+    "name": "Free On Board",
+    "description": "The seller delivers the goods on board the vessel nominated by the buyer at the named port of shipment.",
+    "responsibilities": "Seller covers costs until goods are on the ship. Buyer covers everything after."
+  },
+  "CIF": {
+    "name": "Cost, Insurance, and Freight",
+    "description": "The seller delivers the goods on board the vessel and pays the costs and freight to bring the goods to the named port of destination.",
+    "responsibilities": "Seller covers freight and insurance to the destination port."
+  },
+  "DDP": {
+    "name": "Delivered Duty Paid",
+    "description": "The seller delivers the goods to the buyer, cleared for import and not unloaded from any arriving means of transport at the named place of destination.",
+    "responsibilities": "Seller covers all costs and risks including import duties and taxes."
+  }
+}
