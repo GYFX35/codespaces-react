@@ -5,6 +5,11 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "/codespaces-react/",
   plugins: [react()],
+  server: {
+    proxy: {
+      '/analyze': 'http://localhost:5000'
+    }
+  },
   test: {
     globals: true,
     environment: 'jsdom',

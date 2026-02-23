@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from social_media_analyzer import scam_detector, fake_news_detector
+from social_media_analyzer import scam_detector, fake_news_detector, ai_content_detector, fake_content_verifier
 import os
 
 app = Flask(__name__)
@@ -29,6 +29,26 @@ def analyze_fake_news():
     url_to_analyze = data['url']
 
     result = fake_news_detector.analyze_url_for_fake_news(url_to_analyze)
+    return jsonify(result)
+
+@app.route('/analyze/ai-content', methods=['POST'])
+def analyze_ai_content():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({"error": "Missing 'text' in request body"}), 400
+
+    text_to_analyze = data['text']
+    result = ai_content_detector.analyze_text_for_ai_content(text_to_analyze)
+    return jsonify(result)
+
+@app.route('/analyze/fake-content', methods=['POST'])
+def analyze_fake_content():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({"error": "Missing 'text' in request body"}), 400
+
+    text_to_analyze = data['text']
+    result = fake_content_verifier.analyze_text_for_fake_content(text_to_analyze)
     return jsonify(result)
 
 
