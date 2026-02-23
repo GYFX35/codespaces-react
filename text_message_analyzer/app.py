@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from social_media_analyzer import scam_detector, fake_news_detector, ai_content_detector, fake_content_verifier
+from social_media_analyzer import scam_detector, fake_news_detector, ai_content_detector, fake_content_verifier, video_security_analyzer
 import os
 
 app = Flask(__name__)
@@ -50,6 +50,21 @@ def analyze_fake_content():
     text_to_analyze = data['text']
     result = fake_content_verifier.analyze_text_for_fake_content(text_to_analyze)
     return jsonify(result)
+
+@app.route('/analyze/ai-video', methods=['POST'])
+def analyze_ai_video():
+    data = request.get_json()
+    if not data or 'metadata' not in data:
+        return jsonify({"error": "Missing 'metadata' in request body"}), 400
+
+    metadata = data['metadata']
+    result = video_security_analyzer.analyze_video_metadata(metadata)
+    return jsonify(result)
+
+@app.route('/analyze/video-checklist', methods=['GET'])
+def get_video_checklist():
+    checklist = video_security_analyzer.get_deepfake_checklist()
+    return jsonify(checklist)
 
 
 if __name__ == '__main__':

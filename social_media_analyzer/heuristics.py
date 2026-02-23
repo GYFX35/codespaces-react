@@ -173,6 +173,25 @@ AI_PHRASES = [
     "here is a summary of",
 ]
 
+# --- Video AI & Deepfake Heuristics ---
+
+VIDEO_AI_KEYWORDS = [
+    "deepfake", "ai-generated video", "synthetic media", "face swap",
+    "avatar video", "digital human", "ai spokesperson", "lip-sync ai"
+]
+
+DEEPFAKE_INDICATORS = [
+    "unnatural blinking",
+    "inconsistent lighting on face",
+    "blurred edges around face",
+    "unnatural skin texture",
+    "audio-visual sync issues",
+    "robotic voice tonality",
+    "strange reflections in eyes",
+    "lack of micro-expressions",
+    "distorted background when moving",
+]
+
 # --- Fake News Heuristics ---
 
 FAKE_NEWS_DOMAINS = [
@@ -295,6 +314,8 @@ HEURISTIC_WEIGHTS = {
     "AI_PHRASE": 2.0,
     "ROBOTIC_STRUCTURE": 3.0,
     "LACK_OF_ERRORS": 1.5,
+    "DEEPFAKE_INDICATOR": 2.5,
+    "VIDEO_AI_KEYWORD": 2.0,
     # Teenager Protection Weights
     "CYBERBULLYING": 2.5,
     "INAPPROPRIATE_CONTENT": 3.0,

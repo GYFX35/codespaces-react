@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 from .heuristics import AI_PHRASES, HEURISTIC_WEIGHTS
 
 def analyze_text_for_ai_content(text):
@@ -45,7 +46,6 @@ def analyze_text_for_ai_content(text):
     sentences = [s.strip() for s in sentences if s.strip()]
     if len(sentences) >= 5:
         starts = [s.split()[0].lower() if s.split() else "" for s in sentences]
-        from collections import Counter
         counts = Counter(starts)
         most_common = counts.most_common(1)
         if most_common and most_common[0][1] / len(sentences) > 0.4:
