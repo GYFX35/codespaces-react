@@ -154,6 +154,25 @@ PRIVACY_RISK_KEYWORDS = [
 ]
 
 
+# --- AI Content Heuristics ---
+
+AI_PHRASES = [
+    "as an ai language model",
+    "based on the information provided",
+    "it is important to note that",
+    "in conclusion",
+    "furthermore",
+    "moreover",
+    "on the other hand",
+    "at the end of the day",
+    "it is worth mentioning",
+    "provide a comprehensive overview",
+    "the content provided",
+    "can be summarized as",
+    "let me know if you need any further assistance",
+    "here is a summary of",
+]
+
 # --- Fake News Heuristics ---
 
 FAKE_NEWS_DOMAINS = [
@@ -172,7 +191,9 @@ SENSATIONALIST_KEYWORDS = [
 CLICKBAIT_PATTERNS = [
     r"you won't believe", r"will shock you", r"number \d will amaze you",
     r"this one weird trick", r"doctors hate him", r"the truth about",
-    r"scientists baffled", r"what happened next", r"secret to"
+    r"scientists baffled", r"what happened next", r"secret to",
+    r"completely changed my life", r"instant results", r"limited time offer",
+    r"everyone is talking about", r"gone viral"
 ]
 
 # --- Regular Expression Patterns ---
@@ -271,6 +292,9 @@ HEURISTIC_WEIGHTS = {
     "PHONE_NUMBER_UNSOLICITED": 1.0,
     "SUSPICIOUS_URL_PATTERN": 3.0, # High weight for matching a suspicious URL pattern
     "GOOGLE_SAFE_BROWSING_HIT": 10.0, # Very high weight for a positive Google Safe Browsing match
+    "AI_PHRASE": 2.0,
+    "ROBOTIC_STRUCTURE": 3.0,
+    "LACK_OF_ERRORS": 1.5,
     # Teenager Protection Weights
     "CYBERBULLYING": 2.5,
     "INAPPROPRIATE_CONTENT": 3.0,
