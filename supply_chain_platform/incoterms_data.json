@@ -2,21 +2,89 @@
   "EXW": {
     "name": "Ex Works",
     "description": "The seller makes the goods available at their premises. The buyer bears all costs and risks of moving the goods to the destination.",
-    "responsibilities": "Buyer covers all costs and risks from the seller's door."
+    "responsibilities": "Buyer covers all costs and risks from the seller's door.",
+    "risk_transfer": "At seller's premises (not loaded)",
+    "cost_transfer": "At seller's premises (not loaded)",
+    "transport_modes": "Any"
+  },
+  "FCA": {
+    "name": "Free Carrier",
+    "description": "The seller delivers the goods to the carrier or another person nominated by the buyer at the seller's premises or another named place.",
+    "responsibilities": "Seller is responsible for loading goods onto the buyer's carrier.",
+    "risk_transfer": "When goods delivered to the carrier at the named place",
+    "cost_transfer": "When goods delivered to the carrier at the named place",
+    "transport_modes": "Any"
+  },
+  "FAS": {
+    "name": "Free Alongside Ship",
+    "description": "The seller delivers when the goods are placed alongside the vessel nominated by the buyer at the named port of shipment.",
+    "responsibilities": "Seller covers costs until goods are alongside the ship.",
+    "risk_transfer": "When goods are placed alongside the ship",
+    "cost_transfer": "When goods are placed alongside the ship",
+    "transport_modes": "Sea and Inland Waterway"
   },
   "FOB": {
     "name": "Free On Board",
     "description": "The seller delivers the goods on board the vessel nominated by the buyer at the named port of shipment.",
-    "responsibilities": "Seller covers costs until goods are on the ship. Buyer covers everything after."
+    "responsibilities": "Seller covers costs until goods are on the ship. Buyer covers everything after.",
+    "risk_transfer": "When goods are on board the vessel",
+    "cost_transfer": "When goods are on board the vessel",
+    "transport_modes": "Sea and Inland Waterway"
+  },
+  "CFR": {
+    "name": "Cost and Freight",
+    "description": "The seller delivers the goods on board the vessel and pays the costs and freight to bring the goods to the named port of destination.",
+    "responsibilities": "Seller pays freight to destination port; Buyer assumes risk once goods are on board.",
+    "risk_transfer": "When goods are on board the vessel",
+    "cost_transfer": "At destination port",
+    "transport_modes": "Sea and Inland Waterway"
   },
   "CIF": {
     "name": "Cost, Insurance, and Freight",
-    "description": "The seller delivers the goods on board the vessel and pays the costs and freight to bring the goods to the named port of destination.",
-    "responsibilities": "Seller covers freight and insurance to the destination port."
+    "description": "The seller delivers the goods on board the vessel and pays the costs and freight to bring the goods to the named port of destination, including insurance.",
+    "responsibilities": "Seller covers freight and insurance to the destination port.",
+    "risk_transfer": "When goods are on board the vessel",
+    "cost_transfer": "At destination port",
+    "transport_modes": "Sea and Inland Waterway"
+  },
+  "CPT": {
+    "name": "Carriage Paid To",
+    "description": "The seller delivers the goods to the carrier and pays for carriage to the named place of destination.",
+    "responsibilities": "Seller pays for carriage to destination; Buyer assumes risk once goods are with the first carrier.",
+    "risk_transfer": "When goods are delivered to the first carrier",
+    "cost_transfer": "At named place of destination",
+    "transport_modes": "Any"
+  },
+  "CIP": {
+    "name": "Carriage and Insurance Paid To",
+    "description": "The seller delivers the goods to the carrier and pays for carriage and insurance to the named place of destination.",
+    "responsibilities": "Seller pays for carriage and insurance to destination; Buyer assumes risk once goods are with first carrier.",
+    "risk_transfer": "When goods are delivered to the first carrier",
+    "cost_transfer": "At named place of destination",
+    "transport_modes": "Any"
+  },
+  "DAP": {
+    "name": "Delivered at Place",
+    "description": "The seller delivers when the goods are placed at the disposal of the buyer on the arriving means of transport ready for unloading at the named place of destination.",
+    "responsibilities": "Seller covers all costs/risks until arrival at the named place, except unloading and import clearance.",
+    "risk_transfer": "At named place of destination (ready for unloading)",
+    "cost_transfer": "At named place of destination (ready for unloading)",
+    "transport_modes": "Any"
+  },
+  "DPU": {
+    "name": "Delivered at Place Unloaded",
+    "description": "The seller delivers when the goods, once unloaded, are placed at the disposal of the buyer at a named place of destination.",
+    "responsibilities": "Seller covers all costs/risks including unloading at destination, except import clearance.",
+    "risk_transfer": "At named place of destination (unloaded)",
+    "cost_transfer": "At named place of destination (unloaded)",
+    "transport_modes": "Any"
   },
   "DDP": {
     "name": "Delivered Duty Paid",
     "description": "The seller delivers the goods to the buyer, cleared for import and not unloaded from any arriving means of transport at the named place of destination.",
-    "responsibilities": "Seller covers all costs and risks including import duties and taxes."
+    "responsibilities": "Seller covers all costs and risks including import duties and taxes.",
+    "risk_transfer": "At named place of destination (ready for unloading)",
+    "cost_transfer": "At named place of destination (cleared for import)",
+    "transport_modes": "Any"
   }
 }
