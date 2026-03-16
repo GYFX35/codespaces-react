@@ -45,6 +45,7 @@ LEGITIMATE_DOMAINS = {
         "bankofamerica.com", "chase.com", "wellsfargo.com", "citibank.com",
         "hsbc.com", "barclays.com", "deutsche-bank.com", "santander.com"
     ],
+    "platform": ["global-security-platform.com"],
     "general": ["google.com"],
     "general_web": [
         "wikipedia.org", "yahoo.com", "live.com", "microsoft.com",
