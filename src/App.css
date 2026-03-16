@@ -8,7 +8,23 @@
 .App-header {
   background-color: #111;
   padding: 20px;
-  border-bottom: 2px solid #00ff00;
+  border-bottom: 2px solid #61dafb;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.official-badge {
+  background: #61dafb;
+  color: #111;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 nav {
@@ -17,24 +33,50 @@ nav {
 
 nav button {
   padding: 10px 20px;
-  margin: 0 10px;
+  margin: 5px 10px;
   background: transparent;
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  border: 1px solid #61dafb;
+  color: #61dafb;
   cursor: pointer;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 nav button.active {
-  background: #00ff00;
+  background: #61dafb;
   color: #000;
 }
 
 nav button:hover {
-  box-shadow: 0 0 10px #00ff00;
+  box-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
+  background: rgba(97, 218, 251, 0.1);
 }
 
 main {
   padding: 20px;
+  flex: 1;
+}
+
+.global-footer {
+  background: #111;
+  padding: 20px;
+  border-top: 1px solid #333;
+  margin-top: 40px;
+}
+
+.global-footer a {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+.global-footer a:hover {
+  text-decoration: underline;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
