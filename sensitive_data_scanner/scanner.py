@@ -13,7 +13,11 @@ SENSITIVE_DATA_PATTERNS = {
     "Credit Card (Mastercard)": re.compile(r"5[1-5][0-9]{14}"),
     "Credit Card (Amex)": re.compile(r"3[47][0-9]{13}"),
     "Credit Card (Discover)": re.compile(r"6(?:011|5[0-9]{2})[0-9]{12}"),
-    "Social Security Number": re.compile(r"\d{3}-\d{2}-\d{4}")
+    "Social Security Number": re.compile(r"\d{3}-\d{2}-\d{4}"),
+    "Passport Number (US)": re.compile(r"[a-zA-Z0-9]{9}"),
+    "GCP Service Account Key": re.compile(r"\"type\": \"service_account\""),
+    "Azure Client Secret": re.compile(r"[a-zA-Z0-9-_~.]{34}"),
+    "Health ID (HIPAA)": re.compile(r"H[0-9]{10}")
 }
 
 def scan_file(filepath):

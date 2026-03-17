@@ -102,6 +102,7 @@ export default function SupplyChainPlatform() {
         <button onClick={() => setActiveTab('twin')}>Digital Twin (3D)</button>
         <button onClick={() => setActiveTab('incoterms')}>Incoterms</button>
         <button onClick={() => setActiveTab('logistics')}>Logistics AI</button>
+        <button onClick={() => setActiveTab('security')}>Security & Protection</button>
       </div>
 
       {activeTab === 'twin' && (
@@ -146,6 +147,30 @@ export default function SupplyChainPlatform() {
           </select>
           <div style={{ padding: '20px', border: '1px solid #444', borderRadius: '5px' }}>
             <strong>{selectedTerm}:</strong> {INCOTERMS_DATA[selectedTerm]}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'security' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div style={{ background: '#222', padding: '20px', borderRadius: '10px' }}>
+            <h3>Infrastructure Protection</h3>
+            <p>Monitoring critical IoT sensors for tampering or anomalies.</p>
+            <div style={{ padding: '10px', border: '1px solid #444', borderRadius: '5px', marginBottom: '10px' }}>
+              <strong>Device #842 Status:</strong> <span style={{ color: '#00ff00' }}>SECURE</span><br/>
+              <small>Voltage: 3.3V | Temp: 24°C | RSSI: -42dBm</small>
+            </div>
+            <button onClick={() => logToBlockchain('Infrastructure Health Scan')}>Run AI Perimeter Scan</button>
+          </div>
+
+          <div style={{ background: '#222', padding: '20px', borderRadius: '10px' }}>
+            <h3>Antivirus Identification</h3>
+            <p>AI-driven identification of malicious behavior and file patterns.</p>
+            <div style={{ padding: '10px', border: '1px solid #444', borderRadius: '5px', marginBottom: '10px' }}>
+              <strong>Latest Scan:</strong> No threats detected.<br/>
+              <small>Last behavior scan: {new Date().toLocaleTimeString()}</small>
+            </div>
+            <button onClick={() => logToBlockchain('Malware Signature Update')}>Update AI Signatures</button>
           </div>
         </div>
       )}
