@@ -7,6 +7,7 @@ import FakeContentAnalyzer from './FakeContentAnalyzer';
 import FBIGame from './FBIGame';
 import SupplyChainPlatform from './SupplyChainPlatform';
 import Marketplace from './Marketplace';
+import OfficialAssistance from './OfficialAssistance';
 
 function App() {
   const [view, setView] = useState('marketplace');
@@ -26,6 +27,7 @@ function App() {
           <button className={view === 'fake-content' ? 'active' : ''} onClick={() => setView('fake-content')}>Fake Content</button>
           <button className={view === 'fbi-game' ? 'active' : ''} onClick={() => setView('fbi-game')}>FBI Game</button>
           <button className={view === 'supply-chain' ? 'active' : ''} onClick={() => setView('supply-chain')}>Supply Chain</button>
+          <button className={view === 'assistance' ? 'active' : ''} onClick={() => setView('assistance')}>Official Assistance</button>
         </nav>
       </header>
       <main>
@@ -36,6 +38,7 @@ function App() {
         {view === 'fake-content' && <FakeContentAnalyzer />}
         {view === 'fbi-game' && <FBIGame />}
         {view === 'supply-chain' && <SupplyChainPlatform />}
+        {view === 'assistance' && <OfficialAssistance />}
       </main>
       <footer className="global-footer">
         <p>© 2024 Global Security Platform | Official Domain: <a href="https://global-security-platform.com">global-security-platform.com</a></p>
