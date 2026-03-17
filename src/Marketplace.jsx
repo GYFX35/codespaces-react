@@ -36,6 +36,12 @@ const tools = [
     name: 'Logistics Digital Twin',
     description: '3D warehouse simulation and blockchain-backed logistics tracking.',
     icon: '📦'
+  },
+  {
+    id: 'assistance',
+    name: 'Official Assistance',
+    description: 'Integrated support tools for Police, Military, and Gendarmerie.',
+    icon: '🛡️'
   }
 ];
 

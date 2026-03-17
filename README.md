@@ -28,6 +28,12 @@ An immersive Augmented Reality (AR) training simulation built with Three.js and 
 ### 📦 Logistics Digital Twin
 A 3D warehouse simulation featuring blockchain-backed logistics tracking and IoT-driven anomaly detection. It includes an Incoterms 2020 navigator and AI route optimization tools.
 
+### 🛡️ Official Assistance Tools
+Integrated support modules for official entities:
+- **Police**: Emergency dispatch, secure incident reporting, and forensic analysis.
+- **Military**: Strategic dashboards, AI-driven reconnaissance, and tactical communications.
+- **Gendarmerie**: Territorial security management, traffic coordination, and specialized response units.
+
 ## Tech Stack
 
 ### Frontend
