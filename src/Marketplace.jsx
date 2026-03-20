@@ -40,7 +40,7 @@ const tools = [
   {
     id: 'assistance',
     name: 'Official Assistance',
-    description: 'Integrated support tools for Police, Military, Gendarmerie, and Mobile Operators.',
+    description: 'Integrated support tools for Police, Military, Gendarmerie, Mobile Operators, and Operational Security.',
     icon: '🛡️'
   }
 ];
