@@ -30,11 +30,63 @@ const assistanceRoles = {
       { id: 'traffic', name: 'Traffic Management', icon: '🚦', desc: 'Coordination of road safety and major transit routes.' },
       { id: 'response', name: 'Specialized Response', icon: '🚨', desc: 'Elite units for counter-terrorism and high-risk interventions.' }
     ]
+  },
+  opsec: {
+    title: 'Operational Security',
+    icon: '🔐',
+    description: 'Cloud, IoT, and AI-driven security operations for modern infrastructure.',
+    tools: [
+      { id: 'cloud_guard', name: 'Cloud Guard', icon: '☁️', desc: 'AI scanner for leaked credentials and sensitive cloud data.' },
+      { id: 'iot_shield', name: 'IoT Shield', icon: '🌐', desc: 'Real-time anomaly detection for industrial IoT networks.' },
+      { id: 'opsec_analyzer', name: 'OpSec Analyzer', icon: '🕵️', desc: 'AI-driven analysis of operational logs for procedural threats.' }
+    ]
   }
 };
 
 export default function OfficialAssistance() {
   const [activeRole, setActiveRole] = useState('police');
+  const [analysisResult, setAnalysisResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleLaunch = async (toolId, toolName) => {
+    if (!['cloud_guard', 'iot_shield', 'opsec_analyzer'].includes(toolId)) {
+      alert(`Launching ${toolName}... (Simulation mode)`);
+      return;
+    }
+
+    setLoading(true);
+    setAnalysisResult(null);
+
+    try {
+      let endpoint = '';
+      let body = {};
+
+      if (toolId === 'cloud_guard') {
+        endpoint = '/analyze/cloud';
+        body = { content: "Sample content with simulated AWS key: AKIA1234567890ABCDEF and Google API Key: AIzaSyA12345678901234567890123456789012" };
+      } else if (toolId === 'iot_shield') {
+        endpoint = '/analyze/iot';
+        body = { device_data: { voltage: 2.6, temperature: 82, rssi: -95 } };
+      } else if (toolId === 'opsec_analyzer') {
+        endpoint = '/analyze/opsec';
+        body = { logs: ["unauthorized access attempt", "nmap scan detected", "large outbound transfer", "sudo usage"] };
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      const data = await response.json();
+      setAnalysisResult({ title: toolName, data });
+    } catch (error) {
+      console.error("Error launching tool:", error);
+      alert("Failed to connect to security backend. Make sure the Flask server is running.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="assistance-container">
@@ -63,10 +115,24 @@ export default function OfficialAssistance() {
                 <h3>{tool.name}</h3>
                 <p>{tool.desc}</p>
               </div>
-              <button className="action-btn" onClick={() => alert(`Launching ${tool.name}...`)}>Launch</button>
+              <button
+                className="action-btn"
+                onClick={() => handleLaunch(tool.id, tool.name)}
+                disabled={loading}
+              >
+                {loading ? 'Processing...' : 'Launch'}
+              </button>
             </div>
           ))}
         </div>
+
+        {analysisResult && (
+          <div className="analysis-result">
+            <h3>{analysisResult.title} - AI Analysis Output</h3>
+            <pre>{JSON.stringify(analysisResult.data, null, 2)}</pre>
+            <button className="close-result" onClick={() => setAnalysisResult(null)}>Close Results</button>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
@@ -149,6 +215,35 @@ export default function OfficialAssistance() {
           border-radius: 5px;
           font-weight: bold;
           cursor: pointer;
+        }
+        .action-btn:disabled {
+          background: #555;
+          cursor: not-allowed;
+        }
+        .analysis-result {
+          margin-top: 30px;
+          background: #1e2127;
+          padding: 20px;
+          border-radius: 8px;
+          border: 1px solid #61dafb;
+        }
+        .analysis-result pre {
+          background: #000;
+          padding: 15px;
+          border-radius: 5px;
+          overflow-x: auto;
+          color: #00ff00;
+          font-family: 'Courier New', Courier, monospace;
+          font-size: 0.85rem;
+        }
+        .close-result {
+          background: transparent;
+          color: #61dafb;
+          border: 1px solid #61dafb;
+          padding: 5px 15px;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-top: 10px;
         }
       `}</style>
     </div>
