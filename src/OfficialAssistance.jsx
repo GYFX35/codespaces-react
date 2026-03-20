@@ -40,11 +40,66 @@ const assistanceRoles = {
       { id: 'anti_stealing', name: 'Anti-Stealing Guard', icon: '🔒', desc: 'Detect and prevent bandwidth or data theft from mobile networks.' },
       { id: 'signal_integrity', name: 'Signal Integrity', icon: '📶', desc: 'Monitor network signal strength and detect interference or spoofing.' }
     ]
+  },
+  operational_security: {
+    title: 'Operational Security',
+    icon: '🕵️',
+    description: 'AI-driven security auditing for cloud, IoT, and operational logs.',
+    tools: [
+      { id: 'cloud_audit', name: 'Cloud Security Audit', icon: '☁️', desc: 'Scan cloud configurations for misconfigurations and exposure.' },
+      { id: 'iot_telemetry', name: 'IoT Telemetry Analysis', icon: '📡', desc: 'Real-time analysis of IoT device telemetry for anomalies.' },
+      { id: 'opsec_scanner', name: 'OpSec Log Scanner', icon: '📜', desc: 'Audit operational logs for sensitive data leaks and security threats.' }
+    ]
   }
 };
 
 export default function OfficialAssistance() {
   const [activeRole, setActiveRole] = useState('police');
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleLaunch = async (tool) => {
+    let endpoint = '';
+    let payload = {};
+
+    if (tool.id === 'cloud_audit') {
+      endpoint = '/analyze/cloud';
+      const config = prompt("Enter cloud configuration to audit:");
+      if (!config) return;
+      payload = { config };
+    } else if (tool.id === 'iot_telemetry') {
+      endpoint = '/analyze/iot';
+      const voltage = prompt("Enter IoT voltage (V):", "3.3");
+      const temperature = prompt("Enter IoT temperature (°C):", "25");
+      if (voltage === null || temperature === null) return;
+      payload = { voltage: parseFloat(voltage), temperature: parseFloat(temperature) };
+    } else if (tool.id === 'opsec_scanner') {
+      endpoint = '/analyze/opsec';
+      const logs = prompt("Enter operational logs to scan:");
+      if (!logs) return;
+      payload = { logs };
+    } else {
+      alert(`Launching ${tool.name}... (Simulated)`);
+      return;
+    }
+
+    setLoading(true);
+    setResult(null);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      setResult({ tool: tool.name, data });
+    } catch (error) {
+      console.error("Error launching tool:", error);
+      alert("Failed to connect to the analysis backend.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="assistance-container">
@@ -65,6 +120,23 @@ export default function OfficialAssistance() {
         <h2>{assistanceRoles[activeRole].title}</h2>
         <p className="role-description">{assistanceRoles[activeRole].description}</p>
 
+        {loading && <div className="loading-overlay">Analyzing...</div>}
+
+        {result && (
+          <div className="analysis-result-box">
+            <h3>{result.tool} Results</h3>
+            <div className={`status-badge ${result.data.status}`}>
+              Status: {result.data.status}
+            </div>
+            <ul>
+              {result.data.findings.map((finding, idx) => (
+                <li key={idx}>{finding}</li>
+              ))}
+            </ul>
+            <button className="close-btn" onClick={() => setResult(null)}>Close</button>
+          </div>
+        )}
+
         <div className="tool-list">
           {assistanceRoles[activeRole].tools.map((tool) => (
             <div key={tool.id} className="assistance-tool-card">
@@ -73,7 +145,7 @@ export default function OfficialAssistance() {
                 <h3>{tool.name}</h3>
                 <p>{tool.desc}</p>
               </div>
-              <button className="action-btn" onClick={() => alert(`Launching ${tool.name}...`)}>Launch</button>
+              <button className="action-btn" onClick={() => handleLaunch(tool)}>Launch</button>
             </div>
           ))}
         </div>
@@ -159,6 +231,37 @@ export default function OfficialAssistance() {
           border-radius: 5px;
           font-weight: bold;
           cursor: pointer;
+        }
+        .analysis-result-box {
+          background: #1e2127;
+          border: 1px solid #61dafb;
+          padding: 20px;
+          border-radius: 10px;
+          margin-bottom: 30px;
+        }
+        .status-badge {
+          display: inline-block;
+          padding: 5px 10px;
+          border-radius: 4px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .status-badge.SECURE, .status-badge.STABLE, .status-badge.CLEAR { background: #4caf50; }
+        .status-badge.RISK_DETECTED, .status-badge.ANOMALY, .status-badge.THREAT_DETECTED { background: #f44336; }
+        .loading-overlay {
+          padding: 20px;
+          text-align: center;
+          color: #61dafb;
+          font-weight: bold;
+        }
+        .close-btn {
+          background: #555;
+          color: white;
+          border: none;
+          padding: 5px 15px;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-top: 10px;
         }
       `}</style>
     </div>

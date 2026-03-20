@@ -1,5 +1,11 @@
 from flask import Flask, request, jsonify
-from social_media_analyzer import scam_detector, fake_news_detector, ai_content_detector, fake_content_verifier
+from social_media_analyzer import (
+    scam_detector,
+    fake_news_detector,
+    ai_content_detector,
+    fake_content_verifier,
+    operational_security
+)
 import os
 
 app = Flask(__name__)
@@ -51,6 +57,35 @@ def analyze_fake_content():
     result = fake_content_verifier.analyze_text_for_fake_content(text_to_analyze)
     return jsonify(result)
 
+@app.route('/analyze/cloud', methods=['POST'])
+def analyze_cloud():
+    data = request.get_json()
+    if not data or 'config' not in data:
+        return jsonify({"error": "Missing 'config' in request body"}), 400
+
+    audit_ai = operational_security.CloudSecurityAI()
+    result = audit_ai.audit_config(data['config'])
+    return jsonify(result)
+
+@app.route('/analyze/iot', methods=['POST'])
+def analyze_iot():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Missing data in request body"}), 400
+
+    iot_ai = operational_security.IoTSecurityAI()
+    result = iot_ai.analyze_telemetry(data)
+    return jsonify(result)
+
+@app.route('/analyze/opsec', methods=['POST'])
+def analyze_opsec():
+    data = request.get_json()
+    if not data or 'logs' not in data:
+        return jsonify({"error": "Missing 'logs' in request body"}), 400
+
+    opsec_ai = operational_security.OpSecAI()
+    result = opsec_ai.scan_logs(data['logs'])
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)
