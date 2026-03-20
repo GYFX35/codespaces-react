@@ -30,6 +30,16 @@ const assistanceRoles = {
       { id: 'traffic', name: 'Traffic Management', icon: '🚦', desc: 'Coordination of road safety and major transit routes.' },
       { id: 'response', name: 'Specialized Response', icon: '🚨', desc: 'Elite units for counter-terrorism and high-risk interventions.' }
     ]
+  },
+  mobile_operator: {
+    title: 'Mobile Operator',
+    icon: '📱',
+    description: 'Telecommunications security, IoT protection, and prevention of internet data theft.',
+    tools: [
+      { id: 'iot_audit', name: 'IoT Security Audit', icon: '🤖', desc: 'Scan connected IoT devices for vulnerabilities and unauthorized access.' },
+      { id: 'anti_stealing', name: 'Anti-Stealing Guard', icon: '🔒', desc: 'Detect and prevent bandwidth or data theft from mobile networks.' },
+      { id: 'signal_integrity', name: 'Signal Integrity', icon: '📶', desc: 'Monitor network signal strength and detect interference or spoofing.' }
+    ]
   }
 };
 
