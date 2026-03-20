@@ -36,9 +36,30 @@ const assistanceRoles = {
     icon: '🔐',
     description: 'Cloud, IoT, and AI-driven security operations for modern infrastructure.',
     tools: [
-      { id: 'cloud_guard', name: 'Cloud Guard', icon: '☁️', desc: 'AI scanner for leaked credentials and sensitive cloud data.' },
-      { id: 'iot_shield', name: 'IoT Shield', icon: '🌐', desc: 'Real-time anomaly detection for industrial IoT networks.' },
-      { id: 'opsec_analyzer', name: 'OpSec Analyzer', icon: '🕵️', desc: 'AI-driven analysis of operational logs for procedural threats.' }
+      {
+        id: 'cloud_guard',
+        name: 'Cloud Guard',
+        icon: '☁️',
+        desc: 'AI scanner for leaked credentials and sensitive cloud data.',
+        endpoint: '/analyze/cloud',
+        getPayload: () => ({ content: "Cloud scan simulation with fake AWS key: AKIA0000000000000000 and fake Google API Key: AIza00000000000000000000000000000000000" })
+      },
+      {
+        id: 'iot_shield',
+        name: 'IoT Shield',
+        icon: '🌐',
+        desc: 'Real-time anomaly detection for industrial IoT networks.',
+        endpoint: '/analyze/iot',
+        getPayload: () => ({ device_data: { voltage: 2.6, temperature: 82, rssi: -95 } })
+      },
+      {
+        id: 'opsec_analyzer',
+        name: 'OpSec Analyzer',
+        icon: '🕵️',
+        desc: 'AI-driven analysis of operational logs for procedural threats.',
+        endpoint: '/analyze/opsec',
+        getPayload: () => ({ logs: ["unauthorized access attempt", "nmap scan detected", "large outbound transfer", "sudo usage"] })
+      }
     ]
   }
 };
@@ -48,9 +69,9 @@ export default function OfficialAssistance() {
   const [analysisResult, setAnalysisResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleLaunch = async (toolId, toolName) => {
-    if (!['cloud_guard', 'iot_shield', 'opsec_analyzer'].includes(toolId)) {
-      alert(`Launching ${toolName}... (Simulation mode)`);
+  const handleLaunch = async (tool) => {
+    if (!tool.endpoint) {
+      alert(`Launching ${tool.name}... (Simulation mode)`);
       return;
     }
 
@@ -58,28 +79,14 @@ export default function OfficialAssistance() {
     setAnalysisResult(null);
 
     try {
-      let endpoint = '';
-      let body = {};
-
-      if (toolId === 'cloud_guard') {
-        endpoint = '/analyze/cloud';
-        body = { content: "Sample content with simulated AWS key: AKIA1234567890ABCDEF and Google API Key: AIzaSyA12345678901234567890123456789012" };
-      } else if (toolId === 'iot_shield') {
-        endpoint = '/analyze/iot';
-        body = { device_data: { voltage: 2.6, temperature: 82, rssi: -95 } };
-      } else if (toolId === 'opsec_analyzer') {
-        endpoint = '/analyze/opsec';
-        body = { logs: ["unauthorized access attempt", "nmap scan detected", "large outbound transfer", "sudo usage"] };
-      }
-
-      const response = await fetch(endpoint, {
+      const response = await fetch(tool.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(tool.getPayload())
       });
 
       const data = await response.json();
-      setAnalysisResult({ title: toolName, data });
+      setAnalysisResult({ title: tool.name, data });
     } catch (error) {
       console.error("Error launching tool:", error);
       alert("Failed to connect to security backend. Make sure the Flask server is running.");
@@ -117,7 +124,7 @@ export default function OfficialAssistance() {
               </div>
               <button
                 className="action-btn"
-                onClick={() => handleLaunch(tool.id, tool.name)}
+                onClick={() => handleLaunch(tool)}
                 disabled={loading}
               >
                 {loading ? 'Processing...' : 'Launch'}

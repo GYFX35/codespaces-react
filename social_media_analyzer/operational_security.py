@@ -5,12 +5,19 @@ from supply_chain_platform.security_tools import InfrastructureProtectionAI
 class CloudSecurityAI:
     """AI for scanning cloud credentials and sensitive information."""
 
+    def _redact(self, value):
+        """Redacts a sensitive string, keeping only the first 4 and last 4 characters."""
+        if len(value) <= 10:
+            return "****"
+        return f"{value[:4]}...{value[-4:]}"
+
     def scan_content(self, text_content):
         findings = {}
         for pattern_name, regex in SENSITIVE_DATA_PATTERNS.items():
             matches = regex.findall(text_content)
             if matches:
-                findings[pattern_name] = matches
+                # Redact each match to avoid full exposure
+                findings[pattern_name] = [self._redact(m) for m in matches]
         return findings
 
 class IoTSecurityAI:

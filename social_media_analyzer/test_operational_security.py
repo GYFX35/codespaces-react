@@ -7,7 +7,8 @@ class TestOperationalSecurity(unittest.TestCase):
         content = "My AWS Key is AKIA1234567890ABCDEF"
         findings = ai.scan_content(content)
         self.assertIn("AWS Access Key ID", findings)
-        self.assertEqual(findings["AWS Access Key ID"], ["AKIA1234567890ABCDEF"])
+        # Verify redaction: AKIA1234567890ABCDEF -> AKIA...CDEF
+        self.assertEqual(findings["AWS Access Key ID"], ["AKIA...CDEF"])
 
     def test_iot_security_analyze(self):
         ai = IoTSecurityAI()

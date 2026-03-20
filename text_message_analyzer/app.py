@@ -64,8 +64,11 @@ def analyze_cloud():
         return jsonify({"error": "Missing 'content' in request body"}), 400
 
     content = data['content']
-    result = operational_security.analyze_cloud_security(content)
-    return jsonify(result)
+    try:
+        result = operational_security.analyze_cloud_security(content)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": f"Failed to analyze cloud security: {str(e)}"}), 500
 
 @app.route('/analyze/iot', methods=['POST'])
 def analyze_iot():
@@ -74,8 +77,11 @@ def analyze_iot():
         return jsonify({"error": "Missing 'device_data' in request body"}), 400
 
     device_data = data['device_data']
-    result = operational_security.analyze_iot_security(device_data)
-    return jsonify(result)
+    try:
+        result = operational_security.analyze_iot_security(device_data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": f"Failed to analyze IoT security: {str(e)}"}), 500
 
 @app.route('/analyze/opsec', methods=['POST'])
 def analyze_opsec():
@@ -84,8 +90,14 @@ def analyze_opsec():
         return jsonify({"error": "Missing 'logs' in request body"}), 400
 
     logs = data['logs']
-    result = operational_security.analyze_opsec_security(logs)
-    return jsonify(result)
+    if not isinstance(logs, list) or not all(isinstance(log, str) for log in logs):
+        return jsonify({"error": "'logs' must be a list of strings"}), 400
+
+    try:
+        result = operational_security.analyze_opsec_security(logs)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": f"Failed to analyze operational security: {str(e)}"}), 500
 
 
 if __name__ == '__main__':
